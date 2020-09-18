@@ -15,6 +15,13 @@ var transporter = nodemailer.createTransport({
 
 module.exports = function () {
 
+/**
+ * When the password is forgotten, this function is called to email the admin (me) to change it.
+ * @function
+ * @param {String} firstName - The first name of the user.
+ * @param {String} username - The username of the user.
+ * @param {String} suggPassword - The suggested password.
+ */
     function ForgetPassword(firstName, username, suggPassword) {
         const mailOptions = {
             from: process.env.FromEmail, // sender address
@@ -24,13 +31,23 @@ module.exports = function () {
         }
 
         transporter.sendMail(mailOptions, function (err, info) {
-            if (err)
+            if (err) {
                 console.log(err)
-            else
+                return { Result: "Error", Message: "Error sending mail: " + err }
+            }
+            else {
                 console.log(info);
+                return { Result: "Success", Message: "Email sent" }
+            }
         });
     }
 
+/**
+ * When a new user is added, this notifies me of them being added.
+ * @function
+ * @param {String} firstName - The first name of the user.
+ * @param {String} username - The username of the user.
+ */
     function NewUser(firstName, username) {
         const mailOptions = {
             from: process.env.FromEmail, // sender address
@@ -40,13 +57,23 @@ module.exports = function () {
         }
 
         transporter.sendMail(mailOptions, function (err, info) {
-            if (err)
+            if (err) {
                 console.log(err)
-            else
+                return { Result: "Error", Message: "Error sending mail: " + err }
+            }
+            else {
                 console.log(info);
+                return { Result: "Success", Message: "Email sent" }
+            }
         });
     }
 
+/**
+ * When a user find a ingredient that needs to be added.
+ * @function
+ * @param {String} ingredientName - The ingredient missing.
+ * @param {String} firstName - The first name of the user.
+ */
     function AddSuggestion(ingredientName, firstName) {
         const mailOptions = {
             from: process.env.FromEmail, // sender address
@@ -56,10 +83,14 @@ module.exports = function () {
         }
 
         transporter.sendMail(mailOptions, function (err, info) {
-            if (err)
+            if (err) {
                 console.log(err)
-            else
+                return { Result: "Error", Message: "Error sending mail: " + err }
+            }
+            else {
                 console.log(info);
+                return { Result: "Success", Message: "Email sent" }
+            }
         });
     }
 
