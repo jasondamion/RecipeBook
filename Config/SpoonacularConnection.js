@@ -4,6 +4,7 @@ const baseUrl = "https://api.spoonacular.com/recipes/";
 const axios = require('axios').default;
 const apiKey = process.env.SpoonApiKey;
 const db = require('./JawsDbConnection');
+const { api } = require('./External');
 
 /**
  * Gets recipe information from the api using the recipeId.
@@ -112,6 +113,27 @@ var apiFunctions = {
         })
     },
 
+     /**
+     * Gets 5 random recipes.
+     * @function
+     */
+    getRandomRecipes() {
+        return new Promise(function (resolve) {
+            axios.get(baseUrl + "random?apiKey=" + apiKey + "&number=5").then(
+                    (res) => {
+                        if (res.data.recipes.length > 0) {
+                            resolve({ Result: "Success", Message: res.data.recipes })
+                        }
+                        else {
+                            resolve({ Result: "Success", Message: "Error getting random recipes" })
+                        }
+                    }, err => {
+                        resolve({ Result: "Error", Message: err })
+
+                    })
+        })
+    },
+
     /**
      * Gets the recipe from getRecipeinformation() and getRecipeInstructions() using the recipeId.
      * @function
@@ -142,11 +164,12 @@ var apiFunctions = {
     }
 };
 
+
 module.exports = apiFunctions;
 
-// async function tester() {
-//     var test = await missingIngredient("Fo")
-//     console.log(test)
-// }
+async function tester() {
+    var test = await apiFunctions.getRandomRecipes()
+    console.log(test)
+}
 
-// tester()
+tester()
