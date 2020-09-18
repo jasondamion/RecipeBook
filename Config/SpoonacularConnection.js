@@ -167,9 +167,9 @@ var apiFunctions = {
 
 module.exports = apiFunctions;
 
-async function tester() {
-    var test = await apiFunctions.getRandomRecipes()
-    console.log(test)
-}
+// async function tester() {
+//     var test = await apiFunctions.getRandomRecipes()
+//     console.log(test)
+// }
 
-tester()
+// tester()
