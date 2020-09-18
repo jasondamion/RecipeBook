@@ -40,7 +40,6 @@ function getRecipeInstructions(recipeId) {
                 }
             }, err => {
                 resolve({ Result: "Error", Message: err })
-
             })
     })
 }
@@ -141,9 +140,9 @@ var apiFunctions = {
             }
         }
     }
-}
+};
 
-module.export = apiFunctions;
+module.exports = apiFunctions;
 
 // async function tester() {
 //     var test = await missingIngredient("Fo")
