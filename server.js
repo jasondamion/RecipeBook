@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.ServerPort || 8080;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -14,10 +15,12 @@ app.use(cors({
 
 
 // Routes
-console.log("Server working")
-
 app.get("/", function (req, res) {
   res.send("Working");
 })
 
+require("./User/UserRoutes")(app);
+require("./Recipe/RecipeRoutes")(app);
+
 app.listen(PORT);
+console.log('Server running at port: ' + PORT)

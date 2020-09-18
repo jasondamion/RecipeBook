@@ -59,11 +59,9 @@ var emailFunctions = {
         transporter.sendMail(mailOptions, function (err, info) {
             if (err) {
                 console.log(err)
-                return { Result: "Error", Message: "Error sending mail: " + err }
             }
             else {
                 console.log(info);
-                return { Result: "Success", Message: "Email sent" }
             }
         });
     },
@@ -74,12 +72,12 @@ var emailFunctions = {
  * @param {String} ingredientName - The ingredient missing.
  * @param {String} firstName - The first name of the user.
  */
-     AddSuggestion(ingredientName, firstName) {
+     AddSuggestion(ingredientName, firstName, username) {
         const mailOptions = {
             from: process.env.FromEmail, // sender address
             to: process.env.ToEmail, // list of receivers
             subject: 'Missing Ingredient', // Subject line
-            html: `<h2>${firstName} noticed that an ingredient is missing, The ingredient is ${ingredientName}.</h2>`
+            html: `<h2>${firstName}, username being ${username}, noticed that an ingredient is missing, The ingredient is ${ingredientName}.</h2>`
         }
 
         transporter.sendMail(mailOptions, function (err, info) {

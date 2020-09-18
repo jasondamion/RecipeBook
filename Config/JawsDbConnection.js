@@ -60,6 +60,39 @@ function getUserRecipes(userId) {
     })
 };
 
+/**
+ * Gets all the user custom recipe's id, name, ingredients, instructions, summary, and comments from the database.
+ * @function
+ * @param {Number} userId - The id of the user.
+ */
+function getUserCustomRecipes(userId) {
+    return new Promise(function (resolve) {
+        db.CustomRecipes.findAll({
+            attributes: ["RecipeName", "RecipeIngredients", "RecipeInstructions", "RecipeSummary", "RecipeComments"],
+            where: {
+                UserId: userId,
+            }
+        }).then((res) => {
+            if (res) {
+                if (res.length > 0) {
+                    resolve({ Result: "Success", Message: res })
+                }
+                else {
+                    resolve({ Result: "Success", Message: "No Custom Recipes Found for the user with id: " + userId });
+                }
+            } else {
+                console.log("Problem?")
+                resolve({ Result: "Error", Message: "Unknown Error" })
+            }
+
+        }, (err) => {
+            console.log(err);
+            resolve({ Result: "Error", Message: err })
+        })
+    })
+};
+
+
 var dbFunctions = {
 
     /**
@@ -70,24 +103,24 @@ var dbFunctions = {
      * @param {String} username - The username of the user.
      * @param {String} hashedPassword - The hashed password of the user.
      */
-    signup(firstName, username, hashedPassword) {
+    async signup(firstName, username, hashedPassword) {
         return new Promise(function (resolve) {
             db.Users.findAll({
                 where: {
                     Username: username,
                 }
-            }).then((res) => {
+            }).then(async (res) => {
                 if (res) {
                     if (res.length > 0) {
                         resolve({ Result: "Error", Message: "Username Taken" })
                     }
                     else {
-                        db.Users.create({
+                        const user = await db.Users.create({
                             FirstName: firstName,
                             Username: username,
                             HashPass: hashedPassword
                         })
-                        resolve({ Result: "Success" });
+                        resolve({ Result: "Success", UserId: user.id });
                     }
                 } else {
                     resolve({ Result: "Error", Message: "Unknown Error" })
@@ -113,7 +146,7 @@ var dbFunctions = {
             }).then((res) => {
                 if (res) {
                     if (res.length > 0) {
-                        resolve({ Result: "Success", Message: "Valid User" })
+                        resolve({ Result: "Success", Message: "Valid User", UserId: res[0].userId })
                     }
                     else {
                         resolve({ Result: "Error", Message: "Invalid User" });
@@ -127,20 +160,22 @@ var dbFunctions = {
     },
 
     /**
-     * Uses the getUserInfo and getUserRecipe functions to return both information and saved recipes for the user.
+     * Uses the getUserInfo and getUserRecipe functions to return information, saved recipes, and customRecipes for the user.
      * @function
      * @param {Number} userId - The id of the user.
      */
     async getInfo(userId) {
         var info = await getUserInfo(userId);
-        var recipes = await getUserRecipes(userId);
+        var savedRecipes = await getUserRecipes(userId);
+        var customRecipes = await getUserCustomRecipes(userId);
 
-        if (info.Result == "Success" && recipes.Result == "Success") {
+        if (info.Result == "Success" && savedRecipes.Result == "Success" && customRecipes.Result == "Success") {
             return {
                 Result: "Success",
                 Message: {
                     Info: info.Message,
-                    Recipes: recipes.Message
+                    SavedRecipes: savedRecipes.Message,
+                    CustomRecipes: customRecipes.Message
                 }
             }
         }
@@ -149,7 +184,8 @@ var dbFunctions = {
                 Result: "Error",
                 Message: {
                     Info: info.Message,
-                    Recipes: recipes.Message
+                    SavedRecipes: savedRecipes.Message,
+                    CustomRecipes: customRecipes.Message
                 }
             }
         }
@@ -168,8 +204,8 @@ var dbFunctions = {
         return new Promise(function (resolve) {
             db.SavedRecipes.findAll({
                 where: {
-                    userId: userId,
-                    recipeId: recipeId
+                    UserId: userId,
+                    RecipeId: recipeId
                 }
             }).then((res) => {
                 if (res) {
@@ -184,7 +220,7 @@ var dbFunctions = {
                             RecipeSummary: recipeSummary,
                             RecipeComments: recipeComments
                         })
-                        resolve({ Result: "Success" });
+                        resolve({ Result: "Success", Message: "Recipe Added" });
                     }
                 } else {
                     resolve({ Result: "Error", Message: "Unknown Error" })
@@ -204,8 +240,8 @@ var dbFunctions = {
         return new Promise(function (resolve) {
             db.SavedRecipes.destroy({
                 where: {
-                    userId: userId,
-                    recipeId: recipeId
+                    UserId: userId,
+                    RecipeId: recipeId
                 }
             }).then((res) => {
                 console.log(res)
@@ -230,11 +266,10 @@ var dbFunctions = {
         return new Promise(function (resolve) {
             db.SavedRecipes.update({ RecipeComments: recipeComments }, {
                 where: {
-                    userId: userId,
-                    recipeId: recipeId
+                    UserId: userId,
+                    RecipeId: recipeId
                 }
             }).then((res) => {
-                console.log(res)
                 if (res[0] > 0) {
                     resolve({ Result: "Success", Message: "Successfully updated comments" });
                 } else {
@@ -245,13 +280,147 @@ var dbFunctions = {
         })
     },
 
-      /**
-     * Checks if they are a user.
+/**
+ * Gets a specific user custom recipe by id.
+ * @function
+ * @param {Number} userId - The id of the user.
+ * @param {Number} recipeId - The id of the recipe.
+ */
+ getUserCustomRecipe(userId, recipeId) {
+    return new Promise(function (resolve) {
+        db.CustomRecipes.findAll({
+            attributes: ["RecipeName", "RecipeIngredients", "RecipeInstructions", "RecipeSummary", "RecipeComments"],
+            where: {
+                id: recipeId,
+                UserId: userId
+            }
+        }).then((res) => {
+            if (res) {
+                if (res.length > 0) {
+                    resolve({ Result: "Success", Message: res })
+                }
+                else {
+                    resolve({ Result: "Success", Message: "No Custom Recipe Found with id: " + recipeId });
+                }
+            } else {
+                resolve({ Result: "Error", Message: "Unknown Error" })
+            }
+
+        }, (err) => {
+            resolve({ Result: "Error", Message: err })
+        })
+    })
+},
+
+    /**
+     * If the recipe isn't already added, this adds the recipe to the user's custom recipe list.
      * @function
-     * @param {String} username - The username of the user.
-     * @param {String} hashPassword - The hashed password of the user.
+     * @param {Number} userId - The id of the user.
+     * @param {String} recipeName - The name of the recipe being added.
+     * @param {String} recipeIngredients - The ingredients of the recipe being added.
+     * @param {String} recipeInstructions - The instructions to the recipe being added.
+     * @param {String} recipeSummary - The summary of the recipe being added.
+     * @param {String} recipeComments - The comments to the recipe being added.
      */
-    isUser(username,hashPassword){
+    addCustomRecipe(userId, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments) {
+        return new Promise(function (resolve) {
+            db.CustomRecipes.findAll({
+                where: {
+                    UserId: userId,
+                    RecipeName: recipeName
+                }
+            }).then((res) => {
+                if (res) {
+                    if (res.length > 0) {
+                        resolve({ Result: "Error", Message: "Custom Recipe Already Saved" })
+                    }
+                    else {
+                        db.CustomRecipes.create({
+                            UserId: userId,
+                            RecipeName: recipeName,
+                            RecipeIngredients: recipeIngredients,
+                            RecipeInstructions: recipeInstructions,
+                            RecipeSummary: recipeSummary,
+                            RecipeComments: recipeComments
+                        })
+                        resolve({ Result: "Success", Message: "Custom Recipe Added" });
+                    }
+                } else {
+                    resolve({ Result: "Error", Message: "Unknown Error" })
+                }
+
+            }, (err) => { resolve({ Result: "Error", Message: err }) })
+        })
+    },
+
+    /**
+    * If the recipe isn't already deleted, this deletes the recipe from the user custom recipe list.
+    * @function
+    * @param {Number} userId - The id of the user.
+    * @param {Number} recipeId - The id of the recipe being deleted.
+    */
+    deleteCustomRecipe(userId, recipeId) {
+        return new Promise(function (resolve) {
+            db.CustomRecipes.destroy({
+                where: {
+                    id: recipeId,
+                    UserId: userId
+                }
+            }).then((res) => {
+                if (res) {
+                    resolve({ Result: "Success", Message: "Custom Recipe deleted" });
+                } else {
+                    resolve({ Result: "Error", Message: "Custom Recipe already deleted or Custom Recipe didn't exist" })
+                }
+
+            }, (err) => { resolve({ Result: "Error", Message: err }) })
+        })
+    },
+
+    /**
+        * This edits the recipe with the fields provided.
+        * @function
+        * @param {Number} userId - The id of the user.
+        * @param {Number} recipeId - The id of the recipe edited
+        * @param {String} recipeName - The name of the recipe being added.
+        * @param {String} recipeIngredients - The ingredients of the recipe being added.
+        * @param {String} recipeInstructions - The instructions to the recipe being added.
+        * @param {String} recipeSummary - The summary of the recipe being added.
+        * @param {String} recipeComments - The comments to the recipe being added.
+        */
+    editCustomRecipe(userId, recipeId, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments) {
+        return new Promise(function (resolve) {
+            db.CustomRecipes.update({
+                RecipeName: recipeName,
+                RecipeIngredients: recipeIngredients,
+                RecipeInstructions: recipeInstructions,
+                RecipeSummary: recipeSummary,
+                RecipeComments: recipeComments
+            }, {
+                where: {
+                    id: recipeId,
+                    UserId: userId
+                }
+            }).then((res) => {
+                console.log(res)
+                if (res[0] > 0) {
+                    resolve({ Result: "Success", Message: "Successfully updated custom recipe" });
+                } else {
+                    resolve({ Result: "Error", Message: "Custom Recipe not found or no changes in the custom recipe" })
+                }
+
+            }, (err) => { resolve({ Result: "Error", Message: err }) })
+        })
+    },
+
+
+    /**
+   * Checks if they are a user.
+   * @function
+   * @param {String} username - The username of the user.
+   * @param {String} hashPassword - The hashed password of the user.
+   */
+    isUser(username, hashPassword) {
         return new Promise(function (resolve) {
             db.Users.findAll({
                 where: {
@@ -272,6 +441,29 @@ var dbFunctions = {
 
             }, (err) => { resolve(false) })
         })
+    },
+
+        /**
+    * This just returns all ingredients.
+    * @function
+    */
+    getIngredients(){
+        return new Promise(function (resolve) {
+            db.Ingredients.findAll({}).then((res) => {
+                if (res) {
+                    if (res.length > 0) {
+                        resolve({Result: "Success", Message: res})
+                    }
+                    else {
+                        resolve({Result: "Error", Message: "No Ingredients found"});
+                    }
+                } else {
+                    resolve({Result: "Error", Message: "Unknown Error"})
+                }
+
+            }, (err) => { resolve({Result: "Error", Message: "Unknown Error"})
+        })
+     })
     },
 
     /**
@@ -307,8 +499,7 @@ var dbFunctions = {
 
 module.exports = dbFunctions;
 // async function tester() {
-//     var test = await addIngredient("Roasted Chicken")
+//     var test = await dbFunctions.deleteCustomRecipe(1,1)
 //     console.log(test)
 // }
-
 // tester()

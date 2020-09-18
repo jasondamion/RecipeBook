@@ -6,6 +6,6 @@ The purpose is to be able to search for recipes and save your favorite ones to f
 ## How it works
 
 * First you signup or login.
-* Then from there, you can look up different recipes, see random recipes, save your favorite ones and revisit them when it's time to chef it up!
+* Then from there, you can look up different recipes, see random recipes, create your own, save your favorite ones and revisit them when it's time to chef it up!
 
 ### See what its all about: [RecipeBook](http://recipebook.jasondesigns.net)
