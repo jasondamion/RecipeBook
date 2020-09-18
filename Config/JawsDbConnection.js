@@ -245,6 +245,35 @@ var dbFunctions = {
         })
     },
 
+      /**
+     * Checks if they are a user.
+     * @function
+     * @param {String} username - The username of the user.
+     * @param {String} hashPassword - The hashed password of the user.
+     */
+    isUser(username,hashPassword){
+        return new Promise(function (resolve) {
+            db.Users.findAll({
+                where: {
+                    Username: username,
+                    HashPass: hashPassword
+                }
+            }).then((res) => {
+                if (res) {
+                    if (res.length > 0) {
+                        resolve(true)
+                    }
+                    else {
+                        resolve(false);
+                    }
+                } else {
+                    resolve(false)
+                }
+
+            }, (err) => { resolve(false) })
+        })
+    },
+
     /**
     * Admin only, this just adds ingredients to the database if not already there.
     * @function
