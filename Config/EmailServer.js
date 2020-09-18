@@ -13,7 +13,7 @@ var transporter = nodemailer.createTransport({
 });
 
 
-module.exports = function () {
+var emailFunctions = {
 
 /**
  * When the password is forgotten, this function is called to email the admin (me) to change it.
@@ -22,7 +22,7 @@ module.exports = function () {
  * @param {String} username - The username of the user.
  * @param {String} suggPassword - The suggested password.
  */
-    function ForgetPassword(firstName, username, suggPassword) {
+     ForgetPassword(firstName, username, suggPassword) {
         const mailOptions = {
             from: process.env.FromEmail, // sender address
             to: process.env.ToEmail, // list of receivers
@@ -40,7 +40,7 @@ module.exports = function () {
                 return { Result: "Success", Message: "Email sent" }
             }
         });
-    }
+    },
 
 /**
  * When a new user is added, this notifies me of them being added.
@@ -48,7 +48,7 @@ module.exports = function () {
  * @param {String} firstName - The first name of the user.
  * @param {String} username - The username of the user.
  */
-    function NewUser(firstName, username) {
+     NewUser(firstName, username) {
         const mailOptions = {
             from: process.env.FromEmail, // sender address
             to: process.env.ToEmail, // list of receivers
@@ -66,7 +66,7 @@ module.exports = function () {
                 return { Result: "Success", Message: "Email sent" }
             }
         });
-    }
+    },
 
 /**
  * When a user find a ingredient that needs to be added.
@@ -74,7 +74,7 @@ module.exports = function () {
  * @param {String} ingredientName - The ingredient missing.
  * @param {String} firstName - The first name of the user.
  */
-    function AddSuggestion(ingredientName, firstName) {
+     AddSuggestion(ingredientName, firstName) {
         const mailOptions = {
             from: process.env.FromEmail, // sender address
             to: process.env.ToEmail, // list of receivers
@@ -95,3 +95,5 @@ module.exports = function () {
     }
 
 };
+
+module.exports = emailFunctions;
