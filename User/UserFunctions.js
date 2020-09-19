@@ -18,7 +18,7 @@ var userFunctions = {
             return { Result: "Success", Token: token };
         }
         else {
-            return { Result: "Error", Message: loginStatus.Message }
+            return { Result: "Error", Message: signUpStatus.Message }
         }
     },
 
