@@ -12,6 +12,7 @@ var userFunctions = {
     async SignUp(firstName, username, password) {
         var hashedPassword = external.auth.hasher(password);
         var signUpStatus = await external.db.signup(firstName, username, hashedPassword);
+        console.log(signUpStatus)
         if (signUpStatus.Result == "Success") {
             external.email.NewUser(firstName, username);
             var token = external.auth.genJWTCode(signUpStatus.UserId, username, password);
