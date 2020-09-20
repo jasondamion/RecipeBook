@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require("express");
 const app = express();
-const isDev = process.env.isDev;
+let isDev = process.env.isDev;
+console.log(isDev, process.env.PORT)
 const PORT = isDev ? process.env.ServerPort : process.env.PORT;
 const bodyParser = require('body-parser');
 const cors = require('cors');
