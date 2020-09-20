@@ -7,23 +7,23 @@ var db = require('./JawsDbConnection');
 
 var securityFunctions = {
 
-     /**
-     * Hashes the password.
-     * @function
-     * @param {String} password - The plain password of the user.
-     */
-     hasher(password) {
+    /**
+    * Hashes the password.
+    * @function
+    * @param {String} password - The plain password of the user.
+    */
+    hasher(password) {
         return hash({ Password: password })
     },
-      /**
-     * Generates a JWT token with the userId, password, and username.
-     * @function
-     * @param {Number} userId - The username of the user.
-     * @param {String} username - The username of the user.
-     * @param {String} password - The plain password of the user.
-     */
+    /**
+   * Generates a JWT token with the userId, password, and username.
+   * @function
+   * @param {Number} userId - The username of the user.
+   * @param {String} username - The username of the user.
+   * @param {String} password - The plain password of the user.
+   */
     genJWTCode(userId, username, password) {
-        var hashpass = hasher(password);
+        var hashpass = this.hasher(password);
         var token = jwt.sign({
             "UserId": userId,
             "Username": username,
@@ -32,11 +32,11 @@ var securityFunctions = {
         return token;
     },
 
-         /**
-     * Gets the Id from the token.
-     * @function
-     * @param {String} token - The token given by the user.
-     */
+    /**
+* Gets the Id from the token.
+* @function
+* @param {String} token - The token given by the user.
+*/
     getIdFromToken(token) {
         try {
             var decoded = jwt.verify(token, secret);
@@ -47,11 +47,11 @@ var securityFunctions = {
         return decoded.UserId
     },
 
-             /**
-     * Checks if token is for a valid user.
-     * @function
-     * @param {String} token - The token given by the user.
-     */
+    /**
+* Checks if token is for a valid user.
+* @function
+* @param {String} token - The token given by the user.
+*/
     async isValidUser(token) {
         try {
             var decoded = jwt.verify(token, secret);

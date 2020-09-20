@@ -12,7 +12,7 @@ module.exports = function (app) {
         firstName = req.body.firstName;
         username = req.body.username;
         password = req.body.password;
-        res.send(await User.SignUp(username, password))
+        res.send(await User.SignUp(firstName, username, password))
     })
 
     app.get("/info/", async function (req, res) {
@@ -52,7 +52,7 @@ module.exports = function (app) {
         recipeInstructions = req.body.recipeInstructions;
         recipeSummary = req.body.recipeSummary;
         recipeComments = req.body.recipeComments;
-        res.send(await User.AddCustomRecipe(token,recipeName,recipeIngredients,recipeInstructions,recipeSummary,recipeComments))
+        res.send(await User.AddCustomRecipe(token, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments))
     })
 
     app.put("/custom/", async function (req, res) {
@@ -63,7 +63,7 @@ module.exports = function (app) {
         recipeInstructions = req.body.recipeInstructions;
         recipeSummary = req.body.recipeSummary;
         recipeComments = req.body.recipeComments;
-        res.send(await User.EditCustomRecipe(token,recipeId,recipeName,recipeIngredients,recipeInstructions,recipeSummary,recipeComments))
+        res.send(await User.EditCustomRecipe(token, recipeId, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments))
     })
 
     app.delete("/custom/", async function (req, res) {
@@ -75,7 +75,7 @@ module.exports = function (app) {
     app.post("/forgot/", async function (req, res) {
         firstName = req.body.firstName;
         username = req.body.username;
-        suggestedPassword = req.body.suggestedPassword;        
-        res.send(await User.ForgetPassword(firstName,username,suggestedPassword))
+        suggestedPassword = req.body.suggestedPassword;
+        res.send(await User.ForgetPassword(firstName, username, suggestedPassword))
     })
 }

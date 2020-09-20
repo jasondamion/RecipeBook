@@ -45,11 +45,11 @@ function getRecipeInstructions(recipeId) {
     })
 }
 
-   /**
-     * Admin Only, Gets the ingredient from autocomplete from searchQuery, using api and adds it to the db if not there aleady.
-     * @function
-     * @param {Number} ingredient - The ingredient.
-     */
+/**
+  * Admin Only, Gets the ingredient from autocomplete from searchQuery, using api and adds it to the db if not there aleady.
+  * @function
+  * @param {Number} ingredient - The ingredient.
+  */
 function missingIngredient(ingredient) {
     return new Promise(function (resolve) {
         axios.get("https://api.spoonacular.com/food/ingredients/autocomplete?apiKey=" + apiKey + "&query=" + ingredient + "&number=20").then(
@@ -113,24 +113,24 @@ var apiFunctions = {
         })
     },
 
-     /**
-     * Gets 5 random recipes.
-     * @function
-     */
+    /**
+    * Gets 5 random recipes.
+    * @function
+    */
     getRandomRecipes() {
         return new Promise(function (resolve) {
             axios.get(baseUrl + "random?apiKey=" + apiKey + "&number=5").then(
-                    (res) => {
-                        if (res.data.recipes.length > 0) {
-                            resolve({ Result: "Success", Message: res.data.recipes })
-                        }
-                        else {
-                            resolve({ Result: "Success", Message: "Error getting random recipes" })
-                        }
-                    }, err => {
-                        resolve({ Result: "Error", Message: err })
+                (res) => {
+                    if (res.data.recipes.length > 0) {
+                        resolve({ Result: "Success", Message: res.data.recipes })
+                    }
+                    else {
+                        resolve({ Result: "Success", Message: "Error getting random recipes" })
+                    }
+                }, err => {
+                    resolve({ Result: "Error", Message: err })
 
-                    })
+                })
         })
     },
 

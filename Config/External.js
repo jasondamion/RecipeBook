@@ -11,6 +11,6 @@ const auth = require('./Authenticator');
  * @property {Object} api - The API.
  * @property {Object} auth - The Authenticator.
  */
-const externalFunctions = { email, db, api, auth}
+const externalFunctions = { email, db, api, auth }
 
 module.exports = externalFunctions;

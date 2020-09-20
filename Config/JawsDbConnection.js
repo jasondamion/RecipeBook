@@ -49,7 +49,6 @@ function getUserRecipes(userId) {
                     resolve({ Result: "Success", Message: "No Recipes Found for the user with id: " + userId });
                 }
             } else {
-                console.log("Problem?")
                 resolve({ Result: "Error", Message: "Unknown Error" })
             }
 
@@ -68,7 +67,7 @@ function getUserRecipes(userId) {
 function getUserCustomRecipes(userId) {
     return new Promise(function (resolve) {
         db.CustomRecipes.findAll({
-            attributes: ["RecipeName", "RecipeIngredients", "RecipeInstructions", "RecipeSummary", "RecipeComments"],
+            attributes: ["id", "RecipeName", "RecipeIngredients", "RecipeInstructions", "RecipeSummary", "RecipeComments"],
             where: {
                 UserId: userId,
             }
@@ -81,7 +80,6 @@ function getUserCustomRecipes(userId) {
                     resolve({ Result: "Success", Message: "No Custom Recipes Found for the user with id: " + userId });
                 }
             } else {
-                console.log("Problem?")
                 resolve({ Result: "Error", Message: "Unknown Error" })
             }
 
@@ -104,6 +102,7 @@ var dbFunctions = {
      * @param {String} hashedPassword - The hashed password of the user.
      */
     async signup(firstName, username, hashedPassword) {
+        console.log(username)
         return new Promise(function (resolve) {
             db.Users.findAll({
                 where: {
@@ -115,12 +114,12 @@ var dbFunctions = {
                         resolve({ Result: "Error", Message: "Username Taken" })
                     }
                     else {
-                        const user = await db.Users.create({
+                        await db.Users.create({
                             FirstName: firstName,
                             Username: username,
                             HashPass: hashedPassword
                         })
-                        resolve({ Result: "Success", UserId: user.id });
+                        db.Users.findAll({ where: { Username: username } }).then((response) => { resolve({ Result: "Success", UserId: response[0].dataValues.id }); })
                     }
                 } else {
                     resolve({ Result: "Error", Message: "Unknown Error" })
@@ -146,7 +145,7 @@ var dbFunctions = {
             }).then((res) => {
                 if (res) {
                     if (res.length > 0) {
-                        resolve({ Result: "Success", Message: "Valid User", UserId: res[0].userId })
+                        resolve({ Result: "Success", Message: "Valid User", UserId: res[0].dataValues.id })
                     }
                     else {
                         resolve({ Result: "Error", Message: "Invalid User" });
@@ -280,37 +279,37 @@ var dbFunctions = {
         })
     },
 
-/**
- * Gets a specific user custom recipe by id.
- * @function
- * @param {Number} userId - The id of the user.
- * @param {Number} recipeId - The id of the recipe.
- */
- getUserCustomRecipe(userId, recipeId) {
-    return new Promise(function (resolve) {
-        db.CustomRecipes.findAll({
-            attributes: ["RecipeName", "RecipeIngredients", "RecipeInstructions", "RecipeSummary", "RecipeComments"],
-            where: {
-                id: recipeId,
-                UserId: userId
-            }
-        }).then((res) => {
-            if (res) {
-                if (res.length > 0) {
-                    resolve({ Result: "Success", Message: res })
+    /**
+     * Gets a specific user custom recipe by id.
+     * @function
+     * @param {Number} userId - The id of the user.
+     * @param {Number} recipeId - The id of the recipe.
+     */
+    getUserCustomRecipe(userId, recipeId) {
+        return new Promise(function (resolve) {
+            db.CustomRecipes.findAll({
+                attributes: ["RecipeName", "RecipeIngredients", "RecipeInstructions", "RecipeSummary", "RecipeComments"],
+                where: {
+                    id: recipeId,
+                    UserId: userId
                 }
-                else {
-                    resolve({ Result: "Success", Message: "No Custom Recipe Found with id: " + recipeId });
+            }).then((res) => {
+                if (res) {
+                    if (res.length > 0) {
+                        resolve({ Result: "Success", Message: res })
+                    }
+                    else {
+                        resolve({ Result: "Success", Message: "No Custom Recipe Found with id: " + recipeId });
+                    }
+                } else {
+                    resolve({ Result: "Error", Message: "Unknown Error" })
                 }
-            } else {
-                resolve({ Result: "Error", Message: "Unknown Error" })
-            }
 
-        }, (err) => {
-            resolve({ Result: "Error", Message: err })
+            }, (err) => {
+                resolve({ Result: "Error", Message: err })
+            })
         })
-    })
-},
+    },
 
     /**
      * If the recipe isn't already added, this adds the recipe to the user's custom recipe list.
@@ -402,7 +401,6 @@ var dbFunctions = {
                     UserId: userId
                 }
             }).then((res) => {
-                console.log(res)
                 if (res[0] > 0) {
                     resolve({ Result: "Success", Message: "Successfully updated custom recipe" });
                 } else {
@@ -443,27 +441,28 @@ var dbFunctions = {
         })
     },
 
-        /**
-    * This just returns all ingredients.
-    * @function
-    */
-    getIngredients(){
+    /**
+* This just returns all ingredients.
+* @function
+*/
+    getIngredients() {
         return new Promise(function (resolve) {
             db.Ingredients.findAll({}).then((res) => {
                 if (res) {
                     if (res.length > 0) {
-                        resolve({Result: "Success", Message: res})
+                        resolve({ Result: "Success", Message: res })
                     }
                     else {
-                        resolve({Result: "Error", Message: "No Ingredients found"});
+                        resolve({ Result: "Error", Message: "No Ingredients found" });
                     }
                 } else {
-                    resolve({Result: "Error", Message: "Unknown Error"})
+                    resolve({ Result: "Error", Message: "Unknown Error" })
                 }
 
-            }, (err) => { resolve({Result: "Error", Message: "Unknown Error"})
+            }, (err) => {
+                resolve({ Result: "Error", Message: "Unknown Error" })
+            })
         })
-     })
     },
 
     /**

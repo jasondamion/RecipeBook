@@ -12,7 +12,6 @@ var userFunctions = {
     async SignUp(firstName, username, password) {
         var hashedPassword = external.auth.hasher(password);
         var signUpStatus = await external.db.signup(firstName, username, hashedPassword);
-        console.log(signUpStatus)
         if (signUpStatus.Result == "Success") {
             external.email.NewUser(firstName, username);
             var token = external.auth.genJWTCode(signUpStatus.UserId, username, password);
@@ -109,21 +108,21 @@ var userFunctions = {
         }
     },
 
- /**
-    * Checks if token is for a valid user and if so, gets the specific custom recipe.
-    * @function
-    * @param {String} token - The token given by the user.
-    * @param {Number} recipeId - The name of the recipe being added.   
-    */
-   async GetCustomRecipe(token, recipeId) {
-    var isValid = await external.auth.isValidUser(token);
-    if (isValid) {
-        return external.db.getUserCustomRecipe(external.auth.getIdFromToken(token), recipeId)
-    }
-    else {
-        return { Result: "Error", Message: "Invalid User" }
-    }
-},
+    /**
+       * Checks if token is for a valid user and if so, gets the specific custom recipe.
+       * @function
+       * @param {String} token - The token given by the user.
+       * @param {Number} recipeId - The name of the recipe being added.   
+       */
+    async GetCustomRecipe(token, recipeId) {
+        var isValid = await external.auth.isValidUser(token);
+        if (isValid) {
+            return external.db.getUserCustomRecipe(external.auth.getIdFromToken(token), recipeId)
+        }
+        else {
+            return { Result: "Error", Message: "Invalid User" }
+        }
+    },
 
     /**
     * Checks if token is for a valid user and if so, adds the recipe to the CustomRecipes table.
@@ -182,16 +181,17 @@ var userFunctions = {
         }
     },
 
-        /** 
-       * Sends an email when a user wants to change their password.
-       * @function
-       * @param {String} firstName - The first name of the user.
-       * @param {String} username - The username of the user.
-       * @param {String} suggestedPassword - The suggested password of the user.
-       */
-    async ForgetPassword(firstName, username, suggestedPassword){
-      var emailStatus = await external.email.ForgetPassword(firstName, username, suggestedPassword)
-      return emailStatus;
+    /** 
+   * Sends an email when a user wants to change their password.
+   * @function
+   * @param {String} firstName - The first name of the user.
+   * @param {String} username - The username of the user.
+   * @param {String} suggestedPassword - The suggested password of the user.
+   */
+    async ForgetPassword(firstName, username, suggestedPassword) {
+        var emailStatus = await external.email.ForgetPassword(firstName, username, suggestedPassword)
+        console.log(emailStatus)
+        return emailStatus;
     }
 }
 module.exports = userFunctions;
