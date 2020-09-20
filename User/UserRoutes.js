@@ -128,8 +128,8 @@ module.exports = function (app) {
         suggestedPassword = req.body.suggestedPassword;
         let response = await User.ForgetPassword(firstName, username, suggestedPassword)
         var currentTime = new Date();
-        let timestamp = currentTime.getFullYear + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
-            currentTime.getHours + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
+        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
+            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
         console.log({ Response: response, Timestamp: timestamp });
         res.send(response)
     })
