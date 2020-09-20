@@ -60,9 +60,9 @@ module.exports = function (app) {
         res.send(response)
     })
 
-    app.delete("/saved/", async function (req, res) {
+    app.delete("/saved/:recipeId", async function (req, res) {
         var token = req.header('token');
-        let response = await User.DeleteRecipe(token, req.body.recipeId)
+        let response = await User.DeleteRecipe(token, req.params.recipeId)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
             currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
@@ -111,9 +111,9 @@ module.exports = function (app) {
         res.send(response)
     })
 
-    app.delete("/custom/", async function (req, res) {
+    app.delete("/custom/:recipeId", async function (req, res) {
         var token = req.header('token');
-        recipeId = req.body.recipeId;
+        recipeId = req.params.recipeId;
         let response = await User.DeleteCustomRecipe(token, recipeId)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
