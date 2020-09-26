@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'RecipeWeb';
+  loggedIn = localStorage.get('token') !== null;
 }
