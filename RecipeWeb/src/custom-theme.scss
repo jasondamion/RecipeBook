@@ -13,7 +13,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $RecipeWeb-primary: mat-palette($mat-indigo);
-$RecipeWeb-accent: mat-palette($mat-bluegrey, A200, A100, A400);
+$RecipeWeb-accent: mat-palette($mat-blue-grey, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $RecipeWeb-warn: mat-palette($mat-red);

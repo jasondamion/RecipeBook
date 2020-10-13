@@ -1,1 +1,41 @@
-<p>login works!</p>
+<div class="backdrop">
+    <div class="container">
+        <div class="header">
+            <h1>Login</h1>
+        </div>
+        <div class="form">
+            <label class="mdc-text-field mdc-text-field--filled">
+                <span class="mdc-text-field__ripple"></span>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="username">
+                <span class="mdc-floating-label" [formControl]="username">Username</span>
+                <span class="mdc-line-ripple"></span>
+            </label>
+            <label class="mdc-text-field mdc-text-field--filled">
+                <span class="mdc-text-field__ripple"></span>
+                <input class="mdc-text-field__input" type="text" aria-labelledby="password">
+                <span class="mdc-floating-label" [formControl]="password">Password</span>
+                <span class="mdc-line-ripple"></span>
+            </label>
+            <button class="mdc-button--raised" (click)="login()">
+                <span class="mdc-button__label">Login</span>
+            </button>
+            <button class="mdc-button--raised" routerLink='/Signup'>
+                <span class="mdc-button__label">Click to sign up</span>
+            </button>
+            <button class="mdc-button--raised"  [disabled]="disableForgetPasswordButton">
+                <span class="mdc-button__label">Forgot Password</span>
+            </button>
+        </div>
+        <a href="https://www.vecteezy.com/free-vector/healthy-food-pattern">Healthy Food Pattern Vectors by Vecteezy</a>
+    </div>
+
+    <div class="mdc-snackbar">
+        <div class="mdc-snackbar__surface">
+          <div class="mdc-snackbar__label"
+               role="status"
+               aria-live="polite">
+          Random
+          </div>
+        </div>
+      </div>
+</div>
