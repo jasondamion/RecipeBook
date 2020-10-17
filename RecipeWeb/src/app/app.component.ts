@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'RecipeWeb';
-  loggedIn = localStorage.get('token') !== null;
+  loggedIn;
+  constructor(){
+      this.loggedIn = localStorage.getItem('token') !== null;
+     console.log(this.loggedIn);
+
+  }
 }

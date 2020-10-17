@@ -1,5 +1,7 @@
-@use "@material/drawer";
-@use "@material/list";
-
-@include drawer.core-styles;
-@include list.core-styles;
+.buttons{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+    width:100px; 
+}

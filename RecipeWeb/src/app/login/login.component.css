@@ -1,13 +1,18 @@
-@use "@material/snackbar/mdc-snackbar";
-
-.container{
+.formContainer{
+    padding-top: 2vh;
+    width: 300px;
+    margin: 0 auto;
     text-align: center;
-    left: 50%;
-    top: 50%;
-    margin-left: -25%;
-    position: absolute;
-    margin-top: -25%;
+    background-color: whitesmoke;
+    opacity: 0.9;
+    color: rgba(169, 169, 169, 0.418);
+    font-family: Arial, Helvetica, sans-serif;
+}
+.spacer{
+    padding-top: 20vh;
 }
 .backdrop{
     background-image: url('../../assets/LoginBackdrop.jpg');
+    background-size: 60%;
+    height:100vh;
 }

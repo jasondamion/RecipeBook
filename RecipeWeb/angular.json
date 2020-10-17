@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "RecipeWeb"
+  "defaultProject": "RecipeWeb",
+  "cli": {
+    "analytics": "195c0c05-c6b7-45a7-aca7-fc76649777a9"
+  }
 }

@@ -1,64 +1,73 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { UserService } from '../user.service';
-import { MDCSnackbar } from '@material/snackbar';
-import { Router } from '@angular/router';
-import { ForgetPasswordDialogComponent } from './forget-password-dialog/forget-password-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { UserService } from "../user.service";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
+import { ForgetPasswordDialogComponent } from "./forget-password-dialog/forget-password-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
-  username = new FormControl('', { updateOn: 'change' });
-  password = new FormControl('', { updateOn: 'change' });
-  snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'));
+  username = new FormControl("", { updateOn: "change" });
+  password = new FormControl("", { updateOn: "change" });
   disableForgetPasswordButton: boolean = false;
 
   constructor(
     private userService: UserService,
     private dialog: MatDialog,
-    private router: Router) { }
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   login() {
-    this.userService.login(this.username, this.password)
+    this.userService
+      .login(this.username.value, this.password.value)
       .subscribe((res) => {
         if (res) {
-          if (res.Result === 'Success') {
-            localStorage.setItem('token', res.Token);
-            this.router.navigate(['Home']);
+          if (res.Result === "Success") {
+            localStorage.setItem("token", res.Token);
+            this.router.navigate(["Home"]);
           } else {
-            this.snackbar.labelText = res.Message;
-            this.snackbar.open();
+            this.snackBar.open(res.Message, "", { duration: 3000 });
             console.log(res.Message);
           }
         }
-
       });
   }
 
   forgetPassword() {
-    this.disableForgetPasswordButton = true;
     const dialogRef = this.dialog.open(ForgetPasswordDialogComponent, {
       width: '500px',
     });
     dialogRef.afterClosed().subscribe((response) => {
-      this.userService.forgotPassword(response.firstName,
-        response.username,
-        response.suggestedPassword).subscribe((res) => {
+      if (response.isSent) {
+        console.log(response)
+        this.disableForgetPasswordButton = true;
+        this.userService
+        .forgotPassword(
+          response.firstName,
+          response.username,
+          response.suggestedPassword
+        )
+        .subscribe((res) => {
           if (res) {
-            this.snackbar.labelText = res.Result === 'Success' ? res.Message : 'Error sending email, check console for more...'
-            this.snackbar.open();
+            res.Result === 'Success'
+              ? this.snackBar.open(res.Message, '', { duration: 3000 })
+              : this.snackBar.open(
+                  'Error sending email, check console for more...',
+                  '',
+                  { duration: 3000 }
+                );
             console.log(res.Message);
           }
-
         });
+      }
     });
   }
-
 }
