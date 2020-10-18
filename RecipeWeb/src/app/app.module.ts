@@ -11,6 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './user.service';
 import { RecipeService } from './recipe.service';
 import {AppMatModule} from './app-mat';
+import { SignupComponent } from './signup/signup.component';
+import { HomeComponent } from './home/home.component';
+import { LoggedInService } from './logged-in.service';
 
 
 @NgModule({
@@ -18,7 +21,9 @@ import {AppMatModule} from './app-mat';
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    ForgetPasswordDialogComponent
+    ForgetPasswordDialogComponent,
+    SignupComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,7 @@ import {AppMatModule} from './app-mat';
     HttpClientModule,
     AppMatModule,
   ],
-  providers: [UserService, RecipeService],
+  providers: [UserService, RecipeService, LoggedInService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

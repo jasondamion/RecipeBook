@@ -34,6 +34,14 @@ module.exports = function (app) {
         console.log({ Response: response, Timestamp: timestamp });
         res.send(response);
     })
+    app.get("/random", async function (req, res) {
+        let response = await Recipe.GetRandomRecipes(req.header('token'));
+        var currentTime = new Date();
+        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
+            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
+        console.log({ Response: response, Timestamp: timestamp });
+        res.send(response);
+    })
     app.post("/ingredients/missing", async function (req, res) {
         var token = req.header('token');
         ingredient = req.body.ingredient;

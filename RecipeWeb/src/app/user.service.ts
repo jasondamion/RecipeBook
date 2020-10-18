@@ -163,7 +163,6 @@ export class UserService {
     return data;
   }
   forgotPassword(firstName, username, suggestedPassword): Observable<any> {
-    console.log(firstName + username + suggestedPassword);
     const data = this.http
       .post<any>(
         this.baseUrl + "forgot",

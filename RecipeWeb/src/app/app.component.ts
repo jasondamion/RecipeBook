@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import {LoggedInService} from './logged-in.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  title = 'RecipeWeb';
+  title = "RecipeWeb";
   loggedIn;
-  constructor(){
-      this.loggedIn = localStorage.getItem('token') !== null;
-     console.log(this.loggedIn);
 
+  constructor(loggedInCheck: LoggedInService ) {
+    loggedInCheck.loggedIn.subscribe(loggedIn => this.loggedIn = loggedIn);
   }
 }

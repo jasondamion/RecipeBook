@@ -3,10 +3,14 @@
         <div class = "spacer"></div>
         <div class="formContainer">
             <div class="header">
-                <h1>Login</h1>
+                <h1>Sign Up</h1>
             </div>
             <br />
             <div class="form">
+                <mat-form-field>
+                    <mat-label>First Name</mat-label>
+                    <input [formControl] = "firstName" matInput>
+                </mat-form-field>
                 <mat-form-field>
                     <mat-label>Username</mat-label>
                     <input [formControl] = "username" matInput>
@@ -16,10 +20,9 @@
                     <input type="password" [formControl] = "password" matInput>
                 </mat-form-field>
                 <br/>
-                <button mat-raised-button color="primary" (click)="login()" [disabled]="username.value.length == 0 || password.value.length === 0">Login</button>
+                <button mat-raised-button color="primary" (click)="signUp()" [disabled]="username.value.length == 0 || password.value.length === 0 || firstName.value.length === 0">Sign Up!</button>
                 <hr />
-                <button mat-raised-button color="accent" [routerLink]="['/Signup']">Click to sign up</button>
-                <button mat-raised-button color="accent" (click)="forgetPassword()" [disabled]="disableForgetPasswordButton">Forgot Password</button>
+                <button mat-raised-button color="accent" [routerLink]="['/Login']">Click to login</button>
             </div>
         </div>
     </div>

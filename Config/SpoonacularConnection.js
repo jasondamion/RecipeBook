@@ -81,7 +81,7 @@ var apiFunctions = {
                             resolve({ Result: "Success", Message: res.data.results })
                         }
                         else {
-                            resolve({ Result: "Success", Message: "No recipes found, try a different search term" })
+                            resolve({ Result: "Error", Message: "No recipes found, try a different search term" })
                         }
                     }, err => {
                         resolve({ Result: "Error", Message: err })
@@ -104,7 +104,7 @@ var apiFunctions = {
                             resolve({ Result: "Success", Message: res.data })
                         }
                         else {
-                            resolve({ Result: "Success", Message: "No recipes found, try a different set of ingredients" })
+                            resolve({ Result: "Error", Message: "No recipes found, try a different set of ingredients" })
                         }
                     }, err => {
                         resolve({ Result: "Error", Message: err })
@@ -125,7 +125,7 @@ var apiFunctions = {
                         resolve({ Result: "Success", Message: res.data.recipes })
                     }
                     else {
-                        resolve({ Result: "Success", Message: "Error getting random recipes" })
+                        resolve({ Result: "Error", Message: "Error getting random recipes" })
                     }
                 }, err => {
                     resolve({ Result: "Error", Message: err })

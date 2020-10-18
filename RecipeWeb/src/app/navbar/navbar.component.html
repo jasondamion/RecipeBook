@@ -1,6 +1,8 @@
-<mat-sidenav mode = "side" opened>
-    <button class="buttons" mat-button color="primary">Primary</button>
-    <button class="buttons" mat-button color="primary">Primary</button>
-    <button class="buttons" mat-button color="primary">Primary</button>
-    <button class="buttons" mat-button color="primary">Primary</button>
+<mat-sidenav mode = "side" opened style="width: 9vw;">
+    <button class="buttons" mat-button color="primary" [routerLink]="['/']">Home</button>
+    <button class="buttons" mat-button color="primary" [routerLink]="['/Search/Name']">Search by Name</button>
+    <button class="buttons" mat-button color="primary" [routerLink]="['/Search/Ingredients']">Search by Ingredients</button>
+    <button class="buttons" mat-button color="primary" [routerLink]="['/SavedRecipes']">Saved Recipes</button>
+    <button class="buttons" mat-button color="primary" [routerLink]="['/CustomRecipes']">Custom Recipes</button>
+    <button class="buttons" mat-button color="primary" (click)="logOut()">Log Out</button>
 </mat-sidenav>

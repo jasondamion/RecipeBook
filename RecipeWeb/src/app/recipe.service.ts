@@ -23,6 +23,11 @@ export class RecipeService {
       .pipe(catchError(this.catcher));
     return data;
   }
+  getRandomRecipes(token): Observable<any> {
+    const data = this.http.get(this.baseUrl + 'random', this.httpOptions(token))
+      .pipe(catchError(this.catcher));
+    return data;
+  }
   getRecipesByName(token, name): Observable<any> {
     const data = this.http.get(this.baseUrl + 'recipe/name/' + name, this.httpOptions(token))
       .pipe(catchError(this.catcher));

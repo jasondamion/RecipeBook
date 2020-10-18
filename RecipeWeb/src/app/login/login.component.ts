@@ -5,6 +5,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { ForgetPasswordDialogComponent } from "./forget-password-dialog/forget-password-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
+import { LoggedInService } from '../logged-in.service';
 
 @Component({
   selector: "app-login",
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private loggedInCheck: LoggedInService
   ) {}
 
   ngOnInit() {}
@@ -32,7 +34,8 @@ export class LoginComponent implements OnInit {
         if (res) {
           if (res.Result === "Success") {
             localStorage.setItem("token", res.Token);
-            this.router.navigate(["Home"]);
+            this.loggedInCheck.logIn();
+            this.router.navigate(["/"]);
           } else {
             this.snackBar.open(res.Message, "", { duration: 3000 });
             console.log(res.Message);
