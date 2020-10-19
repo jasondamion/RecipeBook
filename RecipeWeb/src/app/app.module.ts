@@ -14,6 +14,7 @@ import {AppMatModule} from './app-mat';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { LoggedInService } from './logged-in.service';
+import { IndividualRecipeComponent } from './individual-recipe/individual-recipe.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { LoggedInService } from './logged-in.service';
     NavbarComponent,
     ForgetPasswordDialogComponent,
     SignupComponent,
-    HomeComponent
+    HomeComponent,
+    IndividualRecipeComponent,
   ],
   imports: [
     BrowserModule,
