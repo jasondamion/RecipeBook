@@ -1,0 +1,21 @@
+.container {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.actionButtons {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  z-index: 999;
+}
+
+@media print {
+  .hide-print {
+    display: none;
+  }
+  .removeLinks {
+    color: inherit;
+    text-decoration: none;
+  }
+}

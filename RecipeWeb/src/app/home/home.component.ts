@@ -42,16 +42,18 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  saveRecipe(recipeId, recipeName, recipeSummary){
-   this._userService.addRecipe(localStorage.getItem('token'),recipeId,recipeName,recipeSummary,"").subscribe((res)=>{
-    if (res.Result === "Success") {
-      this.randomRecipes = this.randomRecipes.filter(rr => rr.id !== recipeId);
-      this.snackBar.open(res.Message, "", { duration: 3000 });
-      console.log(res.Message);
-    } else {
-      this.snackBar.open(res.Message, "", { duration: 3000 });
-      console.log(res.Message);
-    }
-   })
+  saveRecipe(recipeId, recipeName, recipeSummary) {
+    this._userService
+      .addRecipe(
+        localStorage.getItem("token"),
+        recipeId,
+        recipeName,
+        recipeSummary,
+        ""
+      )
+      .subscribe((res) => {
+        this.snackBar.open(res.Message, "", { duration: 3000 });
+        console.log(res.Message);
+      });
   }
 }

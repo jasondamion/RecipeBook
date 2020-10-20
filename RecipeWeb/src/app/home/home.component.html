@@ -22,7 +22,7 @@
     <div class="card-body">
       <h5 class="card-title">{{ recipe.title }}</h5>
       <p class="card-text" [innerHTML]="recipe.summary"></p>
-      <a href="#" class="btn btn-primary">Save</a>
+      <a (click) ="saveRecipe(recipe.id, recipe.recipeName, recipe.recipeSummary)" class="btn btn-primary">Save</a>
       <button class="buttons" mat-raised-button color="primary" [routerLink]="['/IndividualRecipe', recipe.id]">
         Learn More...
       </button>

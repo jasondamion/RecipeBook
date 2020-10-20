@@ -1,1 +1,49 @@
-<h1>{{recipe?.Info.title}}</h1>
+<div class = "actionButtons">
+<button mat-raised-button (click)="printRecipe()" class="hide-print" color="primary">Print</button>
+<button mat-raised-button (click)="goToSource()" class="hide-print" style="text-align: center;" color="primary">Link To Source</button>
+</div>
+
+<div class="container">
+  <br />
+  <div class="header">
+    <h1>{{ recipe?.Info.title }}</h1>
+    <br />
+    <img src="{{ recipe?.Info.image }}" alt="{{recipe?.Info.title}}"/>
+    <br />
+    <h2>Summary:</h2>
+    <h3 [innerHTML]="recipe?.Info.summary"></h3>
+  </div>
+  <hr />
+  <h2>Ingredients:</h2>
+  <mat-selection-list style="text-align: left;" #ingredients>
+    <mat-list-option *ngFor="let ingredient of recipe?.Info.extendedIngredients">
+      {{ ingredient.original | titlecase }}.
+    </mat-list-option>
+  </mat-selection-list>
+
+  <p class="hide-print">
+    You have {{ ingredients.selectedOptions.selected.length }} out
+    of {{ recipe?.Info.extendedIngredients.length }} ingredients
+  </p>
+  <br />
+  <hr />
+  <h2>Instructions:</h2>
+  <mat-selection-list style="text-align: left;" #instructions>
+    <mat-list-option *ngFor="let instruction of recipe?.Info.instructions">
+      {{ instruction | titlecase }}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <p class="hide-print">
+    You have completed {{ instructions.selectedOptions.selected.length }} out
+    of {{ recipe?.Info.instructions.length }} steps
+  </p>
+
+  <mat-form-field class="hide-print" appearance="fill">
+    <mat-label>Comments</mat-label>
+    <textarea [formControl] = "comments" matInput></textarea>
+  </mat-form-field>
+  <button mat-raised-button (click)="saveRecipe()" class="hide-print" color="primary">Save</button>
+
+</div>
+

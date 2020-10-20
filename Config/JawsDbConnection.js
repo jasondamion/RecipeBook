@@ -219,7 +219,7 @@ var dbFunctions = {
                             RecipeSummary: recipeSummary,
                             RecipeComments: recipeComments
                         })
-                        resolve({ Result: "Success", Message: "Recipe Added" });
+                        resolve({ Result: "Success", Message: "Recipe Saved" });
                     }
                 } else {
                     resolve({ Result: "Error", Message: "Unknown Error" })
