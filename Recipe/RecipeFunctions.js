@@ -1,3 +1,4 @@
+const { query } = require('express');
 const external = require('../Config/External');
 
 var recipeFunctions = {
@@ -87,11 +88,12 @@ var recipeFunctions = {
        * Gets all ingredients for the autocomplete.
        * @function
        * @param {String} token - The token given by the user.
+       * @param {String} token - The query given by the user.
        */
-    async GetIngredients(token){
+    async GetIngredients(token, query){
         var isValid = await external.auth.isValidUser(token);
         if (isValid) {
-            return external.db.getIngredients()
+            return external.db.getIngredients(query)
         }
         else {
             return { Result: "Error", Message: "Invalid User" }

@@ -442,12 +442,13 @@ var dbFunctions = {
     },
 
     /**
-* This just returns all ingredients.
+* This just returns all ingredients that has the query.
 * @function
+* @param {String} query - The query to search by
 */
-    getIngredients() {
+    getIngredients(query) {
         return new Promise(function (resolve) {
-            db.Ingredients.findAll({}).then((res) => {
+            db.Ingredients.findAll({Name: {$like: `%${query}%`}}).then((res) => {
                 if (res) {
                     if (res.length > 0) {
                         resolve({ Result: "Success", Message: res })
@@ -497,8 +498,9 @@ var dbFunctions = {
 };
 
 module.exports = dbFunctions;
+
 // async function tester() {
-//     var test = await dbFunctions.deleteCustomRecipe(1,1)
+//     var test = await dbFunctions.getIngredients("c")
 //     console.log(test)
 // }
-// tester()
+// tester();

@@ -26,8 +26,8 @@ module.exports = function (app) {
         console.log({ Response: response, Timestamp: timestamp });
         res.send(response);
     })
-    app.get("/ingredients", async function (req, res) {
-        let response = await Recipe.GetIngredients(req.header('token'));
+    app.get("/ingredients/search/:query", async function (req, res) {
+        let response = await Recipe.GetIngredients(req.header('token'), req.params.query);
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
             currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();

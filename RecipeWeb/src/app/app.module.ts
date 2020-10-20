@@ -15,6 +15,7 @@ import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { LoggedInService } from './logged-in.service';
 import { IndividualRecipeComponent } from './individual-recipe/individual-recipe.component';
+import { SearchRecipesComponent } from './search-recipes/search-recipes.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { IndividualRecipeComponent } from './individual-recipe/individual-recipe
     SignupComponent,
     HomeComponent,
     IndividualRecipeComponent,
+    SearchRecipesComponent,
   ],
   imports: [
     BrowserModule,
