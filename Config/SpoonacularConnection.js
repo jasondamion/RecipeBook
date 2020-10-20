@@ -25,27 +25,6 @@ function getRecipeInformation(recipeId) {
 }
 
 /**
- * Gets recipe instructions from the api using the recipeId.
- * @function
- * @param {Number} recipeId - The id of the recipe.
- */
-function getRecipeInstructions(recipeId) {
-    return new Promise(function (resolve) {
-        axios.get(baseUrl + recipeId + "/analyzedInstructions?apiKey=" + apiKey).then(
-            (res) => {
-                if (res.data.length > 0) {
-                    resolve({ Result: "Success", Message: res.data[0].steps })
-                }
-                else {
-                    resolve({ Result: "Error", Message: "No recipes found, incorrect id: " + recipeId })
-                }
-            }, err => {
-                resolve({ Result: "Error", Message: err })
-            })
-    })
-}
-
-/**
   * Admin Only, Gets the ingredient from autocomplete from searchQuery, using api and adds it to the db if not there aleady.
   * @function
   * @param {Number} ingredient - The ingredient.
@@ -141,14 +120,12 @@ var apiFunctions = {
      */
     async getRecipeById(recipeId) {
         var info = await getRecipeInformation(recipeId);
-        var instructions = await getRecipeInstructions(recipeId);
 
-        if (info.Result == "Success" && instructions.Result == "Success") {
+        if (info.Result == "Success") {
             return {
                 Result: "Success",
                 Message: {
                     Info: info.Message,
-                    Instructions: instructions.Message
                 }
             }
         }
@@ -157,7 +134,6 @@ var apiFunctions = {
                 Result: "Error",
                 Message: {
                     Info: info.Message,
-                    Instructions: instructions.Message
                 }
             }
         }

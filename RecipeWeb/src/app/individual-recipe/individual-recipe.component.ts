@@ -12,26 +12,28 @@ import { RecipeService } from "../recipe.service";
 })
 export class IndividualRecipeComponent implements OnInit {
   recipe;
-  recipeId: Observable<string>;
+  recipeId: string;
 
   constructor(
     private _recipeService: RecipeService,
-    route: ActivatedRoute,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {
-    this.recipeId = route.params.pipe(map((p) => p.id));
   }
 
   ngOnInit(): void {
+    this.recipeId = this.route.snapshot.paramMap.get('id');
+
     this._recipeService
       .getRecipeById(localStorage.getItem("token"), this.recipeId)
       .subscribe((res) => {
         if (res.Result === "Success") {
           this.recipe = res.Message;
+          console.log(this.recipe)
         } else {
           this.snackBar.open(res.Message, "", { duration: 3000 });
           console.log(res.Message);
         }
       });
-  }
+   }
 }
