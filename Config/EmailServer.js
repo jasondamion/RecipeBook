@@ -98,3 +98,10 @@ var emailFunctions = {
 };
 
 module.exports = emailFunctions;
+
+// async function tester(){
+//     var test = await emailFunctions.AddSuggestion("Test", "Jason", "jasondamion20");
+//     console.log(test);
+// }
+
+// tester();

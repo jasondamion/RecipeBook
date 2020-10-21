@@ -18,7 +18,7 @@ export class MissingIngredientDialogComponent implements OnInit {
   
   closeDialog(isSent: boolean) {
     const response = {
-      username: this.ingredients.value,
+      ingredients: this.ingredients.value,
       isSent,
     };
     this.dialogRef.close(response);
