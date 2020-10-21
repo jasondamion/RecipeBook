@@ -44,10 +44,10 @@ module.exports = function (app) {
     })
     app.post("/ingredients/missing", async function (req, res) {
         var token = req.header('token');
-        ingredient = req.body.ingredient;
+        ingredients = req.body.ingredients;
         username = req.body.username;
         firstName = req.body.firstName;
-        let response = await Recipe.MissingIngredient(token, ingredient, username, firstName);
+        let response = await Recipe.MissingIngredient(token, ingredients, username, firstName);
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
             currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();

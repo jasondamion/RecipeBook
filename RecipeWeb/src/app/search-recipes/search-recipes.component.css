@@ -1,9 +1,17 @@
-.tabs{
-    width: 50%;
+.container{
+    font-family: 'Roboto', sans-serif;
 }
 .header{
     text-align: center;
 }
 .search{
     text-align: center;
+}
+table {
+    width: 100%;
+    text-align: left;
+  }
+.selectedIngredients{
+    height: 40vh;
+    overflow: auto;
 }

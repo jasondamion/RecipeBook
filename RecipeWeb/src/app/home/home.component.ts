@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
     this._userService.info(localStorage.getItem("token")).subscribe((res) => {
       if (res.Result === "Success") {
         localStorage.setItem("fName", res.Message.Info.FirstName);
+        localStorage.setItem("userName", res.Message.Info.Username);
         this.userFName = res.Message.Info.FirstName;
       } else {
         this.snackBar.open(res.Message, "", { duration: 3000 });

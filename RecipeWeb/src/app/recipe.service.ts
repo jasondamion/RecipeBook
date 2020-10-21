@@ -43,9 +43,9 @@ export class RecipeService {
       .pipe(catchError(this.catcher));
     return data;
   }
-  missingIngredient(token, ingredient, username, firstName): Observable<any> {
+  missingIngredient(token, ingredients, username, firstName): Observable<any> {
     const data = this.http.post<any>(this.baseUrl + 'ingredients/missing', {
-      ingredient, username, firstName
+      ingredients, username, firstName
     }, this.httpOptions(token))
       .pipe(catchError(this.catcher));
     return data;

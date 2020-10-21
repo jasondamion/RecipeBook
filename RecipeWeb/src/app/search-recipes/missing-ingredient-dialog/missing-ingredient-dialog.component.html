@@ -1,0 +1,27 @@
+<div style="text-align: center">
+    <h1 mat-dialog-title>Missing Ingredient(s)</h1>
+    <div mat-dialog-content>
+      <p>What ingredient(s) did you find missing?</p>
+      <mat-form-field>
+        <mat-label>Ingredient(s)</mat-label>
+        <input matInput [formControl]="ingredients" />
+      </mat-form-field>
+      <br />
+    </div>
+    <hr />
+  </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="closeDialog(false)">
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="closeDialog(true)"
+        cdkFocusInitial
+      >
+        Request Ingredient
+      </button>
+    </div>
+  
+  

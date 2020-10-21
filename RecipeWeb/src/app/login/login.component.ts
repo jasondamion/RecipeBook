@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((response) => {
       if (response.isSent) {
-        console.log(response)
         this.disableForgetPasswordButton = true;
         this.userService
         .forgotPassword(

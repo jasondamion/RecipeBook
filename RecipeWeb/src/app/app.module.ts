@@ -16,6 +16,7 @@ import { HomeComponent } from './home/home.component';
 import { LoggedInService } from './logged-in.service';
 import { IndividualRecipeComponent } from './individual-recipe/individual-recipe.component';
 import { SearchRecipesComponent } from './search-recipes/search-recipes.component';
+import { MissingIngredientDialogComponent } from './search-recipes/missing-ingredient-dialog/missing-ingredient-dialog.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { SearchRecipesComponent } from './search-recipes/search-recipes.componen
     HomeComponent,
     IndividualRecipeComponent,
     SearchRecipesComponent,
+    MissingIngredientDialogComponent,
   ],
   imports: [
     BrowserModule,
