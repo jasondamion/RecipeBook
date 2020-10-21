@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="header">
+    <br />
+    <h1>Search for your recipes using the tabs below.</h1>
+    <hr />
+  </div>
+  <div class="personal">
+    <mat-tab-group>
+      <mat-tab class="tabs" label="Saved Recipes">
+        <br />
+        <div class="noRecipes"  *ngIf="isEmpty || savedRecipes.length == 0">
+           <h1 color="warn">No Recipes Found....Add new recipes in the search and home screen</h1>
+           <img src="../../assets/Hungry.jpg" alt="Hungry Person">
+        </div>
+        <mat-form-field *ngIf="!isEmpty && (!savedRecipes.length == 0)" appearance="fill">
+          <mat-label>Filter by Recipe Name</mat-label>
+          <input matInput [formControl]="recipeNameFilter" (keyup)="filter()" />
+        </mat-form-field>
+
+        <div class="row card-group" *ngIf="!isEmpty && (!savedRecipes.length == 0)">
+          <div class="col-4" *ngFor="let recipe of savedRecipes">
+              <br />
+            <div class="card text-center" style="width: 20rem">
+              <div class="card-body">
+                <h5 class="card-title">{{ recipe.RecipeName }}</h5>
+                <a (click)="unSaveRecipe(recipe.RecipeId)" class="btn btn-primary"
+                  >Unsave Recipe</a
+                >
+                <button
+                  class="buttons"
+                  mat-raised-button
+                  color="primary"
+                  [routerLink]="['/IndividualRecipe', recipe.RecipeId]"
+                >
+                  See More...
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab class="tabs" label="Custom Recipes">
+        <br />
+        Test
+        <!-- <button
+          mat-raised-button
+          (click)="searchByIngredients()"
+          [disabled]="selectedIngredients.length == 0"
+          color="primary"
+        >
+          Search
+        </button>
+        <button mat-raised-button (click)="missingIngredient()" color="primary">
+          Missing Ingredient?
+        </button> -->
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

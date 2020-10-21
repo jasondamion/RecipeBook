@@ -42,14 +42,18 @@ export class SearchRecipesComponent implements OnInit {
     this._recipeService
       .getIngredients(localStorage.getItem("token"))
       .subscribe((res) => {
-        console.log(res);
+        if(res.Result === "Success"){
         this.dataSource = new MatTableDataSource(
           res.Message.map((x) => ({ id: x.id, name: x.Name, checked: false }))
         );
-        console.log(this.dataSource);
-
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        }
+        else{
+          this.snackBar.open(res.Message, "", { duration: 3000 });
+          console.log(res.Message);
+        }
+
       });
   }
 

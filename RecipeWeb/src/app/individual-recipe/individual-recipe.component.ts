@@ -30,11 +30,11 @@ export class IndividualRecipeComponent implements OnInit {
       .getRecipeById(localStorage.getItem("token"), this.recipeId)
       .subscribe((res) => {
         if (res.Result === "Success") {
-          this.recipe = res.Message;
-          this.recipe.Info.extendedIngredients = this.recipe.Info.extendedIngredients.sort(
+          this.recipe = res.Message.Info;
+          this.recipe.extendedIngredients = this.recipe.extendedIngredients.sort(
             (a, b) => a.aisle.localeCompare(b.aisle)
           );
-          this.recipe.Info.instructions = this.recipe.Info.instructions
+          this.recipe.instructions = this.recipe.instructions
             .replace(/(<([^>]+)>)/gi, "")
             .split(".");
         } else {
@@ -54,13 +54,22 @@ export class IndividualRecipeComponent implements OnInit {
       .addRecipe(
         localStorage.getItem("token"),
         this.recipeId,
-        this.recipe.Info.title,
-        this.recipe.Info.summary,
+        this.recipe.title,
+        this.recipe.summary,
         this.comments.value
       )
       .subscribe((res) => {
+        if(res.Message === "Recipe Already Saved"){
+          this._userService.editRecipeComments(localStorage.getItem("token"), this.recipeId, this.comments.value).subscribe((res)=>{
+            this.snackBar.open(res.Message, "", { duration: 3000 });
+            console.log(res.Message);
+          })
+        }
+        else{
         this.snackBar.open(res.Message, "", { duration: 3000 });
         console.log(res.Message);
+        }
+
       });
   }
 }

@@ -6,37 +6,37 @@
 <div class="container">
   <br />
   <div class="header">
-    <h1>{{ recipe?.Info.title }}</h1>
+    <h1>{{ recipe?.title }}</h1>
     <br />
-    <img src="{{ recipe?.Info.image }}" alt="{{recipe?.Info.title}}"/>
+    <img src="{{ recipe?.image }}" alt="{{recipe?.title}}"/>
     <br />
     <h2>Summary:</h2>
-    <h3 [innerHTML]="recipe?.Info.summary"></h3>
+    <h3 [innerHTML]="recipe?.summary"></h3>
   </div>
   <hr />
   <h2>Ingredients:</h2>
   <mat-selection-list style="text-align: left;" #ingredients>
-    <mat-list-option *ngFor="let ingredient of recipe?.Info.extendedIngredients">
+    <mat-list-option *ngFor="let ingredient of recipe?.extendedIngredients">
       {{ ingredient.original | titlecase }}.
     </mat-list-option>
   </mat-selection-list>
 
   <p class="hide-print">
     You have {{ ingredients.selectedOptions.selected.length }} out
-    of {{ recipe?.Info.extendedIngredients.length }} ingredients
+    of {{ recipe?.extendedIngredients.length }} ingredients
   </p>
   <br />
   <hr />
   <h2>Instructions:</h2>
   <mat-selection-list style="text-align: left;" #instructions>
-    <mat-list-option *ngFor="let instruction of recipe?.Info.instructions">
+    <mat-list-option *ngFor="let instruction of recipe?.instructions">
       {{ instruction | titlecase }}
     </mat-list-option>
   </mat-selection-list>
 
   <p class="hide-print">
     You have completed {{ instructions.selectedOptions.selected.length }} out
-    of {{ recipe?.Info.instructions.length }} steps
+    of {{ recipe?.instructions.length }} steps
   </p>
 
   <mat-form-field class="hide-print" appearance="fill">
