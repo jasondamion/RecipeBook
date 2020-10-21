@@ -85,15 +85,14 @@ var recipeFunctions = {
     },
 
      /** 
-       * Gets all ingredients for the autocomplete.
+       * Gets all ingredients for the table.
        * @function
        * @param {String} token - The token given by the user.
-       * @param {String} token - The query given by the user.
        */
-    async GetIngredients(token, query){
+    async GetIngredients(token){
         var isValid = await external.auth.isValidUser(token);
         if (isValid) {
-            return external.db.getIngredients(query)
+            return external.db.getIngredients()
         }
         else {
             return { Result: "Error", Message: "Invalid User" }

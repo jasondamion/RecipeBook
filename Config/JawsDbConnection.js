@@ -442,13 +442,12 @@ var dbFunctions = {
     },
 
     /**
-* This just returns all ingredients that has the query.
+* This just returns all ingredients.
 * @function
-* @param {String} query - The query to search by
 */
-    getIngredients(query) {
+    getIngredients() {
         return new Promise(function (resolve) {
-            db.Ingredients.findAll({Name: {$like: `%${query}%`}}).then((res) => {
+            db.Ingredients.findAll({}).then((res) => {
                 if (res) {
                     if (res.length > 0) {
                         resolve({ Result: "Success", Message: res })

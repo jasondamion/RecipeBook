@@ -38,8 +38,8 @@ export class RecipeService {
       .pipe(catchError(this.catcher));
     return data;
   }
-  getIngredients(token, query): Observable<any> {
-    const data = this.http.get(this.baseUrl + 'ingredients/search/' + query, this.httpOptions(token))
+  getIngredients(token): Observable<any> {
+    const data = this.http.get(this.baseUrl + 'ingredients/', this.httpOptions(token))
       .pipe(catchError(this.catcher));
     return data;
   }
