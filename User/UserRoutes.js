@@ -133,4 +133,50 @@ module.exports = function (app) {
         console.log({ Response: response, Timestamp: timestamp });
         res.send(response)
     })
+
+    app.post("/image/", async function (req, res) {
+        var token = req.header('token');
+        customRecipeId = req.body.customRecipeId;
+        image = req.body.image;
+        let response = await User.UploadImage(token, image, customRecipeId)
+        var currentTime = new Date();
+        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
+            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
+        console.log({ Response: response, Timestamp: timestamp });
+        res.send(response)
+    })
+
+    app.put("/image/", async function (req, res) {
+        var token = req.header('token');
+        customRecipeId = req.body.customRecipeId;
+        image = req.body.image;
+        let response = await User.UpdateImage(token, image, customRecipeId)
+        var currentTime = new Date();
+        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
+            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
+        console.log({ Response: response, Timestamp: timestamp });
+        res.send(response)
+    })
+
+    app.delete("/image/:customRecipeId", async function (req, res) {
+        var token = req.header('token');
+        var customRecipeId = req.params.customRecipeId;
+        let response = await User.RemoveImage(token, customRecipeId)
+        var currentTime = new Date();
+        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
+            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
+        console.log({ Response: response, Timestamp: timestamp });
+        res.send(response)
+    })
+
+    app.get("/image/:customRecipeId", async function (req, res) {
+        var token = req.header('token');
+        customRecipeId = req.params.customRecipeId;
+        let response = await User.GetImage(token, customRecipeId)
+        var currentTime = new Date();
+        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
+            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
+        console.log({ Response: response, Timestamp: timestamp });
+        res.send(response)
+    })
 }

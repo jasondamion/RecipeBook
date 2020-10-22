@@ -11,8 +11,12 @@ import { UserService } from "../user.service";
 export class PersonalRecipesComponent implements OnInit {
   recipeNameFilter = new FormControl("", { updateOn: "change" });
   initialSavedRecipes: any[] = [];
+  customNameFilter = new FormControl("", { updateOn: "change" });
+  initialCustomRecipes: any[] = [];
   savedRecipes: any[] = [];
-  isEmpty = false;
+  customRecipes: any[] = [];
+  isRecipeEmpty = false;
+  isCustomEmpty = false;
 
   constructor(
     private _userServce: UserService,
@@ -22,10 +26,19 @@ export class PersonalRecipesComponent implements OnInit {
   ngOnInit(): void {
     this._userServce.info(localStorage.getItem("token")).subscribe((res) => {
       if (typeof res.Message.SavedRecipes === "string") {
-        this.isEmpty = true;
+        this.isRecipeEmpty = true;
         this.snackBar.open(res.Message.SavedRecipes, "", { duration: 3000 });
       } else {
           this.initialSavedRecipes = this.savedRecipes = res.Message.SavedRecipes;
+      }
+    });
+
+    this._userServce.info(localStorage.getItem("token")).subscribe((res) => {
+      if (typeof res.Message.CustomRecipes === "string") {
+        this.isCustomEmpty = true;
+        this.snackBar.open(res.Message.CustomRecipes, "", { duration: 3000 });
+      } else {
+          this.initialCustomRecipes = this.customRecipes = res.Message.CustomRecipes;
       }
     });
   }

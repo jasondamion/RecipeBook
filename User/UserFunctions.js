@@ -192,6 +192,77 @@ var userFunctions = {
         var emailStatus = await external.email.ForgetPassword(firstName, username, suggestedPassword)
         console.log(emailStatus)
         return emailStatus;
-    }
+    },
+
+    
+    /** 
+       * Upload the recipe image if valid user
+       * @function
+       * @param {String} token - The token given by the user.
+       * @param {ImageData} image - The image of the recipe being uploaded.
+       * @param {Number} customRecipeId - The id of the recipe being uploaded.
+       */
+      async UploadImage(token, image, customRecipeId) {
+        var isValid = await external.auth.isValidUser(token);
+        if (isValid) {
+            return external.cloud.UploadImage(image, customRecipeId)
+        }
+        else {
+            return { Result: "Error", Message: "Invalid User" }
+        }
+    },
+
+       /** 
+       * Get the recipe image if valid user
+       * @function
+       * @param {String} token - The token given by the user.
+       * @param {String} customRecipeId - The id of the recipe being gotten.
+       */
+      async GetImage(token, customRecipeId) {
+        var isValid = await external.cloud.isValidUser(token);
+        if (isValid) {
+            return external.cloud.GetImage(customRecipeId)
+        }
+        else {
+            return { Result: "Error", Message: "Invalid User" }
+        }
+    },
+
+
+       /** 
+       * Remove the recipe image if valid user
+       * @function
+       * @param {String} token - The token given by the user.
+       * @param {Number} recipeId - The id of the recipe being deleted.
+       */
+      async RemoveImage(token, customRecipeId) {
+        var isValid = await external.auth.isValidUser(token);
+        if (isValid) {
+            return external.cloud.RemoveImage(image, customRecipeId)
+        }
+        else {
+            return { Result: "Error", Message: "Invalid User" }
+        }
+    },
+
+       /** 
+       * Update the recipe image if valid user
+       * @function
+       * @param {String} token - The token given by the user.
+       * @param {ImageData} image - The id of the recipe being deleted.
+       * @param {Number} recipeId - The id of the recipe being deleted.
+       */
+      async UpdateImage(token, image, customRecipeId) {
+        var isValid = await external.auth.isValidUser(token);
+        if (isValid) {
+            return external.cloud.UpdateImage(image, customRecipeId)
+        }
+        else {
+            return { Result: "Error", Message: "Invalid User" }
+        }
+    },
+
+
+
 }
 module.exports = userFunctions;
