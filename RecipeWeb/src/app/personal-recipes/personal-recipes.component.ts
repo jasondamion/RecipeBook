@@ -29,7 +29,7 @@ export class PersonalRecipesComponent implements OnInit {
         this.isRecipeEmpty = true;
         this.snackBar.open(res.Message.SavedRecipes, "", { duration: 3000 });
       } else {
-          this.initialSavedRecipes = this.savedRecipes = res.Message.SavedRecipes;
+        this.initialSavedRecipes = this.savedRecipes = res.Message.SavedRecipes;
       }
     });
 
@@ -38,22 +38,31 @@ export class PersonalRecipesComponent implements OnInit {
         this.isCustomEmpty = true;
         this.snackBar.open(res.Message.CustomRecipes, "", { duration: 3000 });
       } else {
-          this.initialCustomRecipes = this.customRecipes = res.Message.CustomRecipes;
+        this.initialCustomRecipes = this.customRecipes =
+          res.Message.CustomRecipes;
       }
     });
   }
 
-  unSaveRecipe(recipeId){
-    this._userServce.deleteRecipe(localStorage.getItem("token"),recipeId).subscribe((res)=>{
-      this.initialSavedRecipes = this.initialSavedRecipes.filter(x => x.RecipeId !== recipeId)
-      this.savedRecipes = this.savedRecipes.filter(x => x.RecipeId !== recipeId)
+  unSaveRecipe(recipeId) {
+    this._userServce
+      .deleteRecipe(localStorage.getItem("token"), recipeId)
+      .subscribe((res) => {
+        this.initialSavedRecipes = this.initialSavedRecipes.filter(
+          (x) => x.RecipeId !== recipeId
+        );
+        this.savedRecipes = this.savedRecipes.filter(
+          (x) => x.RecipeId !== recipeId
+        );
 
-      this.snackBar.open(res.Message, "", { duration: 3000 });
-      console.log(res.Message);
-    })
+        this.snackBar.open(res.Message, "", { duration: 3000 });
+        console.log(res.Message);
+      });
   }
 
-  filter(){
-    this.savedRecipes = this.initialSavedRecipes.filter(x => x.RecipeName?.includes(this.recipeNameFilter.value))
+  filter() {
+    this.savedRecipes = this.initialSavedRecipes.filter((x) =>
+      x.RecipeName?.includes(this.recipeNameFilter.value)
+    );
   }
 }

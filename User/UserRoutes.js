@@ -137,7 +137,7 @@ module.exports = function (app) {
     app.post("/image/", async function (req, res) {
         var token = req.header('token');
         customRecipeId = req.body.customRecipeId;
-        image = req.body.image;
+        let image = req.files.image;
         let response = await User.UploadImage(token, image, customRecipeId)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
@@ -149,7 +149,7 @@ module.exports = function (app) {
     app.put("/image/", async function (req, res) {
         var token = req.header('token');
         customRecipeId = req.body.customRecipeId;
-        image = req.body.image;
+        let image = req.files.image;
         let response = await User.UpdateImage(token, image, customRecipeId)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +

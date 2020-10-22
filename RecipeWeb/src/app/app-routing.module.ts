@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
+import { IndividualCustomComponent } from './individual-custom/individual-custom.component';
 import { IndividualRecipeComponent } from "./individual-recipe/individual-recipe.component";
 import { LoginComponent } from "./login/login.component";
 import { PersonalRecipesComponent } from './personal-recipes/personal-recipes.component';
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: "Personal",
     component: PersonalRecipesComponent
+  },
+  {
+    path: "IndividualCustom/:id",
+    component: IndividualCustomComponent
   }
 ];
 

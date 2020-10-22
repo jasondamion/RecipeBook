@@ -176,6 +176,43 @@ export class UserService {
       .pipe(catchError(this.catcher));
     return data;
   }
+  uploadImage(token, image, customRecipeId): Observable<any> {
+    const data = this.http
+      .post<any>(
+        this.baseUrl + "image",
+        {
+          image,
+          customRecipeId
+        },
+        this.httpOptions(token)
+      )
+      .pipe(catchError(this.catcher));
+    return data;
+  }
+  updateImage(token, image, customRecipeId): Observable<any> {
+    const data = this.http
+      .put<any>(
+        this.baseUrl + "image",
+        {
+          image,
+          customRecipeId
+        },
+        this.httpOptions(token)
+      )
+      .pipe(catchError(this.catcher));
+    return data;
+  }
+  removeImage(token, customRecipeId): Observable<any> {
+    const data = this.http
+      .delete(this.baseUrl + "image/" + customRecipeId, this.httpOptions(token))
+      .pipe(catchError(this.catcher));
+    return data;
+  }
+  getImage(token, customRecipeId): Observable<any>{
+    const data = this.http.get(this.baseUrl + "image/" + customRecipeId, this.httpOptions(token))
+    .pipe(catchError(this.catcher));
+    return data;
+  }
   catcher(error: HttpErrorResponse) {
     console.log(error.message);
     return throwError(error.message || "Service Error");

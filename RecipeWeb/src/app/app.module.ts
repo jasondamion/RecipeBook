@@ -18,6 +18,9 @@ import { IndividualRecipeComponent } from './individual-recipe/individual-recipe
 import { SearchRecipesComponent } from './search-recipes/search-recipes.component';
 import { MissingIngredientDialogComponent } from './search-recipes/missing-ingredient-dialog/missing-ingredient-dialog.component';
 import { PersonalRecipesComponent } from './personal-recipes/personal-recipes.component';
+import { IndividualCustomComponent } from './individual-custom/individual-custom.component';
+import { CustomDialogComponent } from './individual-custom/custom-dialog/custom-dialog.component';
+import { AppFileUploadComponent } from './app-file-upload/app-file-upload.component';
 
 
 @NgModule({
@@ -32,6 +35,9 @@ import { PersonalRecipesComponent } from './personal-recipes/personal-recipes.co
     SearchRecipesComponent,
     MissingIngredientDialogComponent,
     PersonalRecipesComponent,
+    IndividualCustomComponent,
+    CustomDialogComponent,
+    AppFileUploadComponent,
   ],
   imports: [
     BrowserModule,

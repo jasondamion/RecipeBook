@@ -1,0 +1,50 @@
+<div class = "actionButtons">
+    <button mat-raised-button (click)="printRecipe()" class="hide-print" color="primary">Print</button>
+    <button mat-raised-button (click)="deleteRecipe()" class="hide-print" color="primary">Delete</button>
+    </div>
+    
+    <div class="container">
+      <br />
+      <div class="header">
+        <h1>{{ recipe?.RecipeName }}</h1>
+        <br />
+        <img *ngIf="image" src="{{ image }}" alt="{{recipe?.RecipeName}}"/>
+        <br />
+        <h2>Summary:</h2>
+        <h3 [innerHTML]="recipe?.RecipeSummary"></h3>
+      </div>
+      <hr />
+      <h2>Ingredients:</h2>
+      <mat-selection-list style="text-align: left;" #ingredients>
+        <mat-list-option *ngFor="let ingredient of recipe?.RecipeIngredients">
+          {{ ingredient | titlecase }}.
+        </mat-list-option>
+      </mat-selection-list>
+    
+      <p class="hide-print">
+        You have {{ ingredients.selectedOptions.selected.length }} out
+        of {{ recipe?.RecipeIngredients.length }} ingredients
+      </p>
+      <br />
+      <hr />
+      <h2>Instructions:</h2>
+      <mat-selection-list style="text-align: left;" #instructions>
+        <mat-list-option *ngFor="let instruction of recipe?.RecipeInstructions">
+          {{ instruction | titlecase }}
+        </mat-list-option>
+      </mat-selection-list>
+    
+      <p class="hide-print">
+        You have completed {{ instructions.selectedOptions.selected.length }} out
+        of {{ recipe?.RecipeInstructions.length }} steps
+      </p>
+    
+      <mat-form-field class="hide-print" appearance="fill">
+        <mat-label>Comments</mat-label>
+        <textarea [formControl] = "comments" matInput></textarea>
+      </mat-form-field>
+      <button mat-raised-button (click)="editRecipe()" class="hide-print" color="primary">Edit Recipe</button>
+    
+    </div>
+    
+    
