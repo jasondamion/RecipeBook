@@ -11,11 +11,10 @@ const fileUpload = require('express-fileupload');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
+app.use(fileUpload());
 app.use(cors({
     origin: '*'
   }));
-app.use(fileUpload());
-
 
 // Routes
 app.get("/", function (req, res) {
