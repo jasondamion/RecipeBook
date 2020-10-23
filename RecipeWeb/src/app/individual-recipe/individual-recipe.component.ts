@@ -14,7 +14,7 @@ export class IndividualRecipeComponent implements OnInit {
   recipe;
   recipeId: string;
   aisles: any;
-  comments;
+  comments: FormControl;
 
   constructor(
     private _recipeService: RecipeService,
@@ -34,7 +34,7 @@ export class IndividualRecipeComponent implements OnInit {
           this.recipe.extendedIngredients = this.recipe.extendedIngredients.sort(
             (a, b) => a.aisle.localeCompare(b.aisle)
           );
-          this.assignCommentsIfSaved();
+          // this.assignCommentsIfSaved();
           this.recipe.instructions = this.recipe.instructions
             .replace(/(<([^>]+)>)/gi, "")
             .split(".");
@@ -42,6 +42,7 @@ export class IndividualRecipeComponent implements OnInit {
           this.snackBar.open(res.Message, "", { duration: 3000 });
           console.log(res.Message);
         }
+        this.assignCommentsIfSaved();
       });
   }
   printRecipe() {
@@ -51,19 +52,32 @@ export class IndividualRecipeComponent implements OnInit {
     window.open(this.recipe.Info.spoonacularSourceUrl);
   }
   assignCommentsIfSaved() {
-    this._userService.info(localStorage.getItem("token")).subscribe((res) => {
-      if (res.Message.SavedRecipes.find((x) => x.RecipeId === this.recipeId)) {
-        console.log("Recipe Found");
-        this.comments = new FormControl(
-          res.Message.SavedRecipes.find(
-            (x) => x.RecipeId === this.recipeId
-          ).RecipeComments,
-          { updateOn: "change" }
-        );
-      } else {
-        this.comments = new FormControl("", { updateOn: "change" });
-      }
-    });
+    this._userService
+      .info(localStorage.getItem("token"))
+      .subscribe((response) => {
+        if (typeof response.Message.SavedRecipes !== "string") {
+          if (
+            response.Message.SavedRecipes.map((x) => {
+              return {
+                RecipeId: x.RecipeId,
+                RecipeComments: x.RecipeComments,
+              };
+            }).find((x) => x.RecipeId == this.recipe.id)
+          ) {
+            this.comments = new FormControl(
+              response.Message.SavedRecipes.map((x) => {
+                return {
+                  RecipeId: x.RecipeId,
+                  RecipeComments: x.RecipeComments,
+                };
+              }).find((x) => x.RecipeId == this.recipe.id).RecipeComments,
+              { updateOn: "change" }
+            );
+          } else {
+            this.comments = new FormControl("", { updateOn: "change" });
+          }
+        }
+      });
   }
   saveRecipe() {
     this._userService

@@ -66,10 +66,21 @@ export class IndividualCustomComponent implements OnInit {
   editRecipe() {
     const dialogRef = this.dialog.open(CustomDialogComponent, {
       width: "500px",
-      data: {recipe: this.recipe, image: this.image},
+      data: { recipe: this.recipe, image: this.image },
     });
     dialogRef.afterClosed().subscribe((response) => {
-      if (response.comfirmed) {
+      if (response.confirmed) {
+        if (response.image) {
+          this._userService
+            .updateImage(
+              localStorage.getItem("token"),
+              response.image,
+              this.recipeId
+            )
+            .subscribe((res) => {
+              this.snackBar.open(res.Message, "", { duration: 3000 });
+            });
+        }
         this._userService
           .editCustomRecipe(
             localStorage.getItem("token"),

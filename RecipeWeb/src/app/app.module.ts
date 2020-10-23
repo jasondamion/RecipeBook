@@ -20,7 +20,8 @@ import { MissingIngredientDialogComponent } from './search-recipes/missing-ingre
 import { PersonalRecipesComponent } from './personal-recipes/personal-recipes.component';
 import { IndividualCustomComponent } from './individual-custom/individual-custom.component';
 import { CustomDialogComponent } from './individual-custom/custom-dialog/custom-dialog.component';
-import { AppFileUploadComponent } from './app-file-upload/app-file-upload.component';
+import { FileUploadComponent } from './app-file-upload/app-file-upload.component';
+import { ProgressComponent } from './progress/progress.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { AppFileUploadComponent } from './app-file-upload/app-file-upload.compon
     PersonalRecipesComponent,
     IndividualCustomComponent,
     CustomDialogComponent,
-    AppFileUploadComponent,
+    FileUploadComponent,
+    ProgressComponent,
   ],
   imports: [
     BrowserModule,

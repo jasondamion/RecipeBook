@@ -39,9 +39,9 @@
     of {{ recipe?.instructions.length }} steps
   </p>
 
-  <mat-form-field class="hide-print" appearance="fill">
+  <mat-form-field class="hide-print" *ngIf="comments" appearance="fill">
     <mat-label>Comments</mat-label>
-    <textarea [formControl] = "comments" matInput></textarea>
+    <textarea [formControl]="comments" matInput></textarea>
   </mat-form-field>
   <button mat-raised-button (click)="saveRecipe()" class="hide-print" color="primary">Save</button>
 

@@ -47,11 +47,11 @@
         </div>
         <mat-form-field *ngIf="!isCustomEmpty" appearance="fill">
           <mat-label>Filter by Recipe Name</mat-label>
-          <input matInput [formControl]="recipeNameFilter" (keyup)="filter()" />
+          <input matInput [formControl]="customNameFilter" (keyup)="filter()" />
         </mat-form-field>
-        <h2 *ngIf="savedRecipes.length == 0 && !isCustomEmpty">No recipes containing the word: {{recipeNameFilter.value}}</h2>
-        <div class="row card-group" *ngIf="!isRecipeEmpty && !(savedRecipes.length == 0)">
-          <div class="col-4" *ngFor="let recipe of savedRecipes">
+        <h2 *ngIf="customRecipes.length == 0 && !isCustomEmpty">No recipes containing the word: {{customNameFilter.value}}</h2>
+        <div class="row card-group" *ngIf="!isCustomEmpty && !(customRecipes.length == 0)">
+          <div class="col-4" *ngFor="let recipe of customRecipes">
               <br />
             <div class="card text-center" style="width: 20rem">
               <div class="card-body">

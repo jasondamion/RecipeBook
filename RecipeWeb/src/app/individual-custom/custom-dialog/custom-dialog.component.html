@@ -1,17 +1,14 @@
 <div style="text-align: center">
   <h1 mat-dialog-title>Edit Recipe</h1>
   <div mat-dialog-content>
-    <img src="{{ image }}" alt="Recipe Image" />
-    <app-file-upload
-      formControlName="image"
-      [progress]="progress"
-    ></app-file-upload>
+    <img src="{{ currentImage }}" alt="Recipe Image" />
+    <app-file-upload [formControl]="image"></app-file-upload>
     <mat-form-field>
       <mat-label>Recipe Name</mat-label>
       <input matInput [formControl]="recipeName" />
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Ingredient(s)</mat-label>
+      <mat-label>Summary</mat-label>
       <input matInput [formControl]="recipeSummary" />
     </mat-form-field>
     <mat-form-field>
@@ -19,11 +16,11 @@
       <input matInput [formControl]="recipeIngredients" />
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Ingredient(s)</mat-label>
+      <mat-label>Instruction(s)</mat-label>
       <input matInput [formControl]="recipeInstructions" />
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Ingredient(s)</mat-label>
+      <mat-label>Comment(s)</mat-label>
       <input matInput [formControl]="recipeComments" />
     </mat-form-field>
     <br />
