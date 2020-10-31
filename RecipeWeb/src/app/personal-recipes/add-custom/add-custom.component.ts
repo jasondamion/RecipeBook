@@ -9,8 +9,6 @@ import { requiredFileType } from 'src/app/app-file-upload/requiredFileType';
   styleUrls: ["./add-custom.component.css"],
 })
 export class AddCustomComponent implements OnInit {
-currentImage = this.data.image;
-
   recipeName = new FormControl("", {
     updateOn: "change",
   });

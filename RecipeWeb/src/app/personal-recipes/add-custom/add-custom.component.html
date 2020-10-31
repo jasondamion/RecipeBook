@@ -1,42 +1,46 @@
 <div style="text-align: center">
-    <h1 mat-dialog-title>Edit Recipe</h1>
-    <div mat-dialog-content>
-      <app-file-upload [formControl]="image"></app-file-upload>
-      <mat-form-field>
-        <mat-label>Recipe Name</mat-label>
-        <input matInput [formControl]="recipeName" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Summary</mat-label>
-        <input matInput [formControl]="recipeSummary" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Ingredient(s)</mat-label>
-        <input matInput [formControl]="recipeIngredients" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Instruction(s)</mat-label>
-        <input matInput [formControl]="recipeInstructions" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Comment(s)</mat-label>
-        <input matInput [formControl]="recipeComments" />
-      </mat-form-field>
-      <br />
-    </div>
-    <hr />
+  <h1 mat-dialog-title>Edit Recipe</h1>
+  <div mat-dialog-content>
+    <app-file-upload [formControl]="image"></app-file-upload>
+    <br />
+    <mat-form-field>
+      <mat-label>Recipe Name</mat-label>
+      <input matInput [formControl]="recipeName" />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Summary</mat-label>
+      <input matInput [formControl]="recipeSummary" />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Ingredient(s)</mat-label>
+      <input matInput [formControl]="recipeIngredients" />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Instruction(s)</mat-label>
+      <input matInput [formControl]="recipeInstructions" />
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <mat-label>Comment(s)</mat-label>
+      <input matInput [formControl]="recipeComments" />
+    </mat-form-field>
+    <br />
   </div>
-  <div mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="closeDialog(false)">
-      Cancel
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="closeDialog(true)"
-      cdkFocusInitial
-    >
-      Save Recipe
-    </button>
-  </div>
-  
+  <hr />
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="closeDialog(false)">
+    Cancel
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="closeDialog(true)"
+    cdkFocusInitial
+  >
+    Save Recipe
+  </button>
+</div>
