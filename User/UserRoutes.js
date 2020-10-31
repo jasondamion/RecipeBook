@@ -87,7 +87,8 @@ module.exports = function (app) {
         recipeInstructions = req.body.recipeInstructions;
         recipeSummary = req.body.recipeSummary;
         recipeComments = req.body.recipeComments;
-        let response = await User.AddCustomRecipe(token, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments)
+        image = req.files.image;
+        let response = await User.AddCustomRecipe(token, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments, image)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
             currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
@@ -127,18 +128,6 @@ module.exports = function (app) {
         username = req.body.username;
         suggestedPassword = req.body.suggestedPassword;
         let response = await User.ForgetPassword(firstName, username, suggestedPassword)
-        var currentTime = new Date();
-        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
-            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
-        console.log({ Response: response, Timestamp: timestamp });
-        res.send(response)
-    })
-
-    app.post("/image/", async function (req, res) {
-        var token = req.header('token');
-        customRecipeId = req.body.customRecipeId;
-        let image = req.files.image;
-        let response = await User.UploadImage(token, image, customRecipeId)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
             currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();

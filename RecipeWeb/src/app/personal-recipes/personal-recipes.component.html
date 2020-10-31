@@ -41,6 +41,14 @@
       </mat-tab>
       <mat-tab class="tabs" label="Custom Recipes">
         <br />
+        <button
+        class="buttons"
+        mat-raised-button
+        color="primary"
+        (click)="addRecipe()"
+      >
+        Add Recipe
+      </button>
         <div class="noRecipes"  *ngIf="isCustomEmpty">
            <h1 color="warn">No Custom Recipes Found....Click the add button above to add your own</h1>
            <img src="../../assets/Hungry.jpg" width="130vw" height="130vh" alt="Hungry Person">
@@ -56,14 +64,11 @@
             <div class="card text-center" style="width: 20rem">
               <div class="card-body">
                 <h5 class="card-title">{{ recipe.RecipeName }}</h5>
-                <a (click)="unSaveRecipe(recipe.RecipeId)" class="btn btn-primary"
-                  >Unsave Recipe</a
-                >
                 <button
                   class="buttons"
                   mat-raised-button
                   color="primary"
-                  [routerLink]="['/IndividualRecipe', recipe.RecipeId]"
+                  [routerLink]="['/IndividualCustom', recipe.RecipeId]"
                 >
                   See More...
                 </button>

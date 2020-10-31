@@ -22,6 +22,7 @@ import { IndividualCustomComponent } from './individual-custom/individual-custom
 import { CustomDialogComponent } from './individual-custom/custom-dialog/custom-dialog.component';
 import { FileUploadComponent } from './app-file-upload/app-file-upload.component';
 import { ProgressComponent } from './progress/progress.component';
+import { AddCustomComponent } from './personal-recipes/add-custom/add-custom.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { ProgressComponent } from './progress/progress.component';
     CustomDialogComponent,
     FileUploadComponent,
     ProgressComponent,
+    AddCustomComponent,
   ],
   imports: [
     BrowserModule,

@@ -134,10 +134,17 @@ var userFunctions = {
     * @param {String} recipeSummary - The summary of the recipe being added.
     * @param {String} recipeComments - The comments to the recipe being added.
     */
-    async AddCustomRecipe(token, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments) {
+    async AddCustomRecipe(token, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments, image) {
         var isValid = await external.auth.isValidUser(token);
         if (isValid) {
-            return external.db.addCustomRecipe(external.auth.getIdFromToken(token), recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments)
+            var addCustomRecipeResults = external.db.addCustomRecipe(external.auth.getIdFromToken(token), recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments)
+            if(image){
+                var imageUploadResults = external.cloud.UploadImage(image, addCustomRecipeResults.RecipeId)
+                return {RecipeResults: addCustomRecipeResults, ImageResults: imageUploadResults};
+            }
+            else{
+              return {RecipeResults: addCustomRecipeResults, ImageResults: null};
+            }
         }
         else {
             return { Result: "Error", Message: "Invalid User" }
@@ -193,25 +200,7 @@ var userFunctions = {
         console.log(emailStatus)
         return emailStatus;
     },
-
     
-    /** 
-       * Upload the recipe image if valid user
-       * @function
-       * @param {String} token - The token given by the user.
-       * @param {ImageData} image - The image of the recipe being uploaded.
-       * @param {Number} customRecipeId - The id of the recipe being uploaded.
-       */
-      async UploadImage(token, image, customRecipeId) {
-        var isValid = await external.auth.isValidUser(token);
-        if (isValid) {
-            return external.cloud.UploadImage(image, customRecipeId)
-        }
-        else {
-            return { Result: "Error", Message: "Invalid User" }
-        }
-    },
-
        /** 
        * Get the recipe image if valid user
        * @function

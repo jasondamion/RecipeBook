@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { UserService } from "../user.service";
+import { AddCustomComponent } from './add-custom/add-custom.component';
 
 @Component({
   selector: "app-personal-recipes",
@@ -19,12 +21,13 @@ export class PersonalRecipesComponent implements OnInit {
   isCustomEmpty = false;
 
   constructor(
-    private _userServce: UserService,
-    private snackBar: MatSnackBar
+    private _userService: UserService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
-    this._userServce.info(localStorage.getItem("token")).subscribe((res) => {
+    this._userService.info(localStorage.getItem("token")).subscribe((res) => {
       if (typeof res.Message.SavedRecipes === "string") {
         this.isRecipeEmpty = true;
         this.snackBar.open(res.Message.SavedRecipes, "", { duration: 3000 });
@@ -33,7 +36,7 @@ export class PersonalRecipesComponent implements OnInit {
       }
     });
 
-    this._userServce.info(localStorage.getItem("token")).subscribe((res) => {
+    this._userService.info(localStorage.getItem("token")).subscribe((res) => {
       if (typeof res.Message.CustomRecipes === "string") {
         this.isCustomEmpty = true;
         this.snackBar.open(res.Message.CustomRecipes, "", { duration: 3000 });
@@ -44,8 +47,32 @@ export class PersonalRecipesComponent implements OnInit {
     });
   }
 
+  addRecipe(){
+      const dialogRef = this.dialog.open(AddCustomComponent, {
+        width: "500px",
+      });
+      dialogRef.afterClosed().subscribe((response) => {
+        if (response.confirmed) {
+          this._userService
+            .addCustomRecipe(
+              localStorage.getItem("token"),
+              response.recipeName,
+              response.recipeIngredients,
+              response.recipeInstructions,
+              response.recipeSummary,
+              response.recipeComments,
+              response.image
+            )
+            .subscribe((res) => {      
+              console.log(res);
+              this.snackBar.open(res.RecipeResults.Message, "", { duration: 3000 });
+            });
+        }
+      });
+  }
+
   unSaveRecipe(recipeId) {
-    this._userServce
+    this._userService
       .deleteRecipe(localStorage.getItem("token"), recipeId)
       .subscribe((res) => {
         this.initialSavedRecipes = this.initialSavedRecipes.filter(

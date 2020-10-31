@@ -1,6 +1,6 @@
 .container {
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif; 
 }
 
 .actionButtons {
@@ -8,6 +8,14 @@
   top: 5%;
   right: 2%;
   z-index: 999;
+}
+
+.ingredients {
+    padding: 1% !important;
+}
+
+.instructions {
+    padding: 4% !important;
 }
 
 @media print {

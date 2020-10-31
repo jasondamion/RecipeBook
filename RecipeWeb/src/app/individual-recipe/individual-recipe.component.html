@@ -16,11 +16,12 @@
   <hr />
   <h2>Ingredients:</h2>
   <mat-selection-list style="text-align: left;" #ingredients>
-    <mat-list-option *ngFor="let ingredient of recipe?.extendedIngredients">
+    <mat-list-option class = "ingredients" *ngFor="let ingredient of recipe?.extendedIngredients">
       {{ ingredient.original | titlecase }}.
     </mat-list-option>
   </mat-selection-list>
-
+  
+  <br />
   <p class="hide-print">
     You have {{ ingredients.selectedOptions.selected.length }} out
     of {{ recipe?.extendedIngredients.length }} ingredients
@@ -29,13 +30,14 @@
   <hr />
   <h2>Instructions:</h2>
   <mat-selection-list style="text-align: left;" #instructions>
-    <mat-list-option *ngFor="let instruction of recipe?.instructions">
+    <mat-list-option class="instructions" *ngFor="let instruction of recipe?.instructions">
       {{ instruction | titlecase }}
     </mat-list-option>
-  </mat-selection-list>
+  </mat-selection-list> 
 
+  <br />
   <p class="hide-print">
-    You have completed {{ instructions.selectedOptions.selected.length }} out
+    You have completed {{ instructions?.selectedOptions.selected.length }} out
     of {{ recipe?.instructions.length }} steps
   </p>
 

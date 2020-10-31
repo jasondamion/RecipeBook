@@ -31,13 +31,8 @@ export class IndividualRecipeComponent implements OnInit {
       .subscribe((res) => {
         if (res.Result === "Success") {
           this.recipe = res.Message.Info;
-          this.recipe.extendedIngredients = this.recipe.extendedIngredients.sort(
-            (a, b) => a.aisle.localeCompare(b.aisle)
-          );
-          // this.assignCommentsIfSaved();
-          this.recipe.instructions = this.recipe.instructions
-            .replace(/(<([^>]+)>)/gi, "")
-            .split(".");
+          this.sortIngredientsByAisle();
+          this.splitInstructions();
         } else {
           this.snackBar.open(res.Message, "", { duration: 3000 });
           console.log(res.Message);
@@ -78,6 +73,31 @@ export class IndividualRecipeComponent implements OnInit {
           }
         }
       });
+  }
+  sortIngredientsByAisle() {
+    this.recipe.extendedIngredients.forEach((x) => {
+      if (!x.aisle) {
+        x.aisle = "z";
+      }
+    });
+    this.recipe.extendedIngredients = this.recipe.extendedIngredients.sort(
+      (a, b) => a.aisle?.localeCompare(b.aisle)
+    );
+  }
+  splitInstructions() {
+    this.recipe.instructions = this.recipe.instructions.replace(
+      /(<([^>]+)>)/gi,
+      ""
+    );
+    if (this.recipe.instructions.includes("↵")) {
+      this.recipe.instructions = this.recipe.instructions.split("↵");
+    }
+    if (this.recipe.instructions.includes(",")) {
+      this.recipe.instructions = this.recipe.instructions.split(",");
+    }
+    if (this.recipe.instructions.includes(".")) {
+      this.recipe.instructions = this.recipe.instructions.split(".");
+    }
   }
   saveRecipe() {
     this._userService

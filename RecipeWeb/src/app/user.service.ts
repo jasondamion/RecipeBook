@@ -114,7 +114,8 @@ export class UserService {
     recipeIngredients,
     recipeInstructions,
     recipeSummary,
-    recipeComments
+    recipeComments,
+    image
   ): Observable<any> {
     const data = this.http
       .post<any>(
@@ -125,6 +126,7 @@ export class UserService {
           recipeInstructions,
           recipeSummary,
           recipeComments,
+          image
         },
         this.httpOptions(token)
       )
@@ -176,19 +178,7 @@ export class UserService {
       .pipe(catchError(this.catcher));
     return data;
   }
-  uploadImage(token, image, customRecipeId): Observable<any> {
-    const data = this.http
-      .post<any>(
-        this.baseUrl + "image",
-        {
-          image,
-          customRecipeId
-        },
-        this.httpOptions(token)
-      )
-      .pipe(catchError(this.catcher));
-    return data;
-  }
+
   updateImage(token, image, customRecipeId): Observable<any> {
     const data = this.http
       .put<any>(
