@@ -367,7 +367,7 @@ var dbFunctions = {
         (res) => {
           if (res) {
             if (res.length > 0) {
-              resolve({ Result: "Success", Message: res });
+              resolve({ Result: "Success", Message: res[0] });
             } else {
               resolve({
                 Result: "Success",
@@ -403,6 +403,7 @@ var dbFunctions = {
     recipeSummary,
     recipeComments
   ) {
+
     return new Promise(function (resolve) {
       db.CustomRecipes.findAll({
         where: {

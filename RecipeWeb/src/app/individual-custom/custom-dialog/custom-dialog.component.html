@@ -1,27 +1,29 @@
 <div style="text-align: center">
   <h1 mat-dialog-title>Edit Recipe</h1>
   <div mat-dialog-content>
-    <img src="{{ currentImage }}" alt="Recipe Image" />
-    <app-file-upload [formControl]="image"></app-file-upload>
     <mat-form-field>
       <mat-label>Recipe Name</mat-label>
-      <input matInput [formControl]="recipeName" />
+      <textarea matInput [formControl]="recipeName"></textarea>
     </mat-form-field>
+    <br />
     <mat-form-field>
       <mat-label>Summary</mat-label>
-      <input matInput [formControl]="recipeSummary" />
+      <textarea matInput [formControl]="recipeSummary"></textarea> 
     </mat-form-field>
+    <br />
     <mat-form-field>
       <mat-label>Ingredient(s)</mat-label>
-      <input matInput [formControl]="recipeIngredients" />
+      <textarea  matInput [formControl]="recipeIngredients" ></textarea>
     </mat-form-field>
+    <br />
     <mat-form-field>
       <mat-label>Instruction(s)</mat-label>
-      <input matInput [formControl]="recipeInstructions" />
+      <textarea matInput [formControl]="recipeInstructions"></textarea>
     </mat-form-field>
+    <br />
     <mat-form-field>
       <mat-label>Comment(s)</mat-label>
-      <input matInput [formControl]="recipeComments" />
+      <textarea matInput [formControl]="recipeComments" ></textarea>
     </mat-form-field>
     <br />
   </div>

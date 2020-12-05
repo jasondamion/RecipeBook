@@ -24,6 +24,7 @@
     "@angular/router": "~10.1.5",
     "@material/drawer": "^7.0.0",
     "@material/snackbar": "^7.0.0",
+    "ng2-file-upload": "^1.4.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

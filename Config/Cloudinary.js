@@ -31,7 +31,7 @@ var cloudFunctions = {
             console.log(error);
             resolve({
               Result: "Error",
-              Message: "Error uploading image: " + err,
+              Message: "Error uploading image: " + error,
             });
           }
           console.log(result);

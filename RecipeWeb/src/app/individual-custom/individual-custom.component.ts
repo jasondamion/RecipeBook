@@ -34,6 +34,7 @@ export class IndividualCustomComponent implements OnInit {
           this.snackBar.open(res.Message, "", { duration: 3000 });
         } else {
           this.recipe = res.Message;
+          this.splitInstructionsAndIngredients();
           this.comments = new FormControl(this.recipe.RecipeComments, {
             updateOn: "change",
           });
@@ -57,10 +58,27 @@ export class IndividualCustomComponent implements OnInit {
       .deleteCustomRecipe(localStorage.getItem("token"), this.recipeId)
       .subscribe((res) => {
         this.snackBar.open(res.Message, "", { duration: 3000 });
-        if (res.Result === "Success") {
-          this.router.navigate(["Personal"]);
-        }
+        this.router.navigate(["Personal"]);
       });
+  }
+
+  splitInstructionsAndIngredients() {
+    this.recipe.RecipeInstructions = this.recipe.RecipeInstructions.replace(
+      /(<([^>]+)>)/gi,
+      ""
+    );
+    if (this.recipe.RecipeInstructions.includes(".")) {
+      this.recipe.RecipeInstructions = this.recipe.RecipeInstructions.split(
+        "."
+      );
+    }
+    this.recipe.RecipeIngredients = this.recipe.RecipeIngredients.replace(
+      /(<([^>]+)>)/gi,
+      ""
+    );
+    if (this.recipe.RecipeIngredients.includes(".")) {
+      this.recipe.RecipeIngredients = this.recipe.RecipeIngredients.split(".");
+    }
   }
 
   editRecipe() {
@@ -70,17 +88,6 @@ export class IndividualCustomComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((response) => {
       if (response.confirmed) {
-        if (response.image) {
-          this._userService
-            .updateImage(
-              localStorage.getItem("token"),
-              response.image,
-              this.recipeId
-            )
-            .subscribe((res) => {
-              this.snackBar.open(res.Message, "", { duration: 3000 });
-            });
-        }
         this._userService
           .editCustomRecipe(
             localStorage.getItem("token"),
@@ -96,7 +103,7 @@ export class IndividualCustomComponent implements OnInit {
             this.router
               .navigateByUrl("/", { skipLocationChange: true })
               .then(() => {
-                this.router.navigate(["/CustomRecipe", this.recipeId]);
+                this.router.navigate(["/IndividualCustom", this.recipeId]);
               });
           });
       }

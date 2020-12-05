@@ -9,7 +9,8 @@ import { catchError } from "rxjs/operators";
 
 @Injectable()
 export class UserService {
-  private baseUrl = "http://recipeserver.jasondesigns.net/";
+ // private baseUrl = "http://recipeserver.jasondesigns.net/";
+ private baseUrl = "http://localhost:8000/";
   private httpOptions(token) {
     if (token) {
       return {
@@ -114,8 +115,7 @@ export class UserService {
     recipeIngredients,
     recipeInstructions,
     recipeSummary,
-    recipeComments,
-    image
+    recipeComments
   ): Observable<any> {
     const data = this.http
       .post<any>(
@@ -125,8 +125,7 @@ export class UserService {
           recipeIngredients,
           recipeInstructions,
           recipeSummary,
-          recipeComments,
-          image
+          recipeComments
         },
         this.httpOptions(token)
       )
@@ -140,7 +139,7 @@ export class UserService {
     recipeIngredients,
     recipeInstructions,
     recipeSummary,
-    recipeComments
+    recipeComments,
   ): Observable<any> {
     const data = this.http
       .put<any>(

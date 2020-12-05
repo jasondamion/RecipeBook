@@ -5,13 +5,12 @@ let isDev = process.env.isDev;
 const PORT = isDev === "true" ? process.env.ServerPort : process.env.PORT;
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fileUpload = require('express-fileupload');
+
 
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
-app.use(fileUpload());
 app.use(cors({
     origin: '*'
   }));

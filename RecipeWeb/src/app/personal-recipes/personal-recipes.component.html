@@ -14,7 +14,7 @@
         </div>
         <mat-form-field *ngIf="!isRecipeEmpty" appearance="fill">
           <mat-label>Filter by Recipe Name</mat-label>
-          <input matInput [formControl]="recipeNameFilter" (keyup)="filter()" />
+          <input matInput [formControl]="recipeNameFilter" (keyup)="filterSaved()" />
         </mat-form-field>
         <h2 *ngIf="savedRecipes.length == 0 && !isRecipeEmpty">No recipes containing the word: {{recipeNameFilter.value}}</h2>
         <div class="row card-group" *ngIf="!isRecipeEmpty && !(savedRecipes.length == 0)">
@@ -49,13 +49,14 @@
       >
         Add Recipe
       </button>
+      <br />
         <div class="noRecipes"  *ngIf="isCustomEmpty">
            <h1 color="warn">No Custom Recipes Found....Click the add button above to add your own</h1>
            <img src="../../assets/Hungry.jpg" width="130vw" height="130vh" alt="Hungry Person">
         </div>
         <mat-form-field *ngIf="!isCustomEmpty" appearance="fill">
           <mat-label>Filter by Recipe Name</mat-label>
-          <input matInput [formControl]="customNameFilter" (keyup)="filter()" />
+          <input matInput [formControl]="customNameFilter" (keyup)="filterCustom()" />
         </mat-form-field>
         <h2 *ngIf="customRecipes.length == 0 && !isCustomEmpty">No recipes containing the word: {{customNameFilter.value}}</h2>
         <div class="row card-group" *ngIf="!isCustomEmpty && !(customRecipes.length == 0)">
@@ -68,7 +69,7 @@
                   class="buttons"
                   mat-raised-button
                   color="primary"
-                  [routerLink]="['/IndividualCustom', recipe.RecipeId]"
+                  [routerLink]="['/IndividualCustom', recipe.id]"
                 >
                   See More...
                 </button>

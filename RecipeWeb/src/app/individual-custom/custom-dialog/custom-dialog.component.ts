@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, ElementRef, Input } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { requiredFileType } from 'src/app/app-file-upload/requiredFileType';
 
 @Component({
   selector: "app-custom-dialog",
@@ -9,8 +8,6 @@ import { requiredFileType } from 'src/app/app-file-upload/requiredFileType';
   styleUrls: ["./custom-dialog.component.css"],
 })
 export class CustomDialogComponent implements OnInit {
-currentImage = this.data.image;
-
   recipeName = new FormControl(this.data.recipe.RecipeName, {
     updateOn: "change",
   });
@@ -26,24 +23,36 @@ currentImage = this.data.image;
   recipeComments = new FormControl(this.data.recipe.RecipeComments, {
     updateOn: "change",
   });
-  image = new FormControl(null, [requiredFileType('png')])
 
   constructor(
     public dialogRef: MatDialogRef<CustomDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private readonly data
+    @Inject(MAT_DIALOG_DATA) private readonly data,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {console.log(this.data.recipe)}
+
+  formatArray() {
+   this.recipeIngredients.setValue(this.recipeIngredients.value.toString());
+   this.recipeInstructions.setValue(this.recipeInstructions.value.toString());
+   
+    if (this.recipeInstructions.value.includes(",")) {
+      this.recipeInstructions.setValue(this.recipeInstructions.value.replace(/,/g, "."));
+    }
+
+    if (this.recipeIngredients.value.includes(",")) {
+      this.recipeIngredients.setValue(this.recipeIngredients.value.replace(/,/g, ".")); 
+    }
+  }
 
   closeDialog(confirmed){
+    this.formatArray();
     this.dialogRef.close({
       confirmed,
-      recipeName: this.recipeName,
-      recipeIngredients: this.recipeIngredients,
-      recipeInstructions: this.recipeInstructions,
-      recipeSummary: this.recipeSummary,
-      recipeComments: this.recipeComments,
-      image: this.image ? this.image : this.currentImage
+      recipeName: this.recipeName.value,
+      recipeIngredients: this.recipeIngredients.value,
+      recipeInstructions: this.recipeInstructions.value,
+      recipeSummary: this.recipeSummary.value,
+      recipeComments: this.recipeComments.value,
     })
   }
 }

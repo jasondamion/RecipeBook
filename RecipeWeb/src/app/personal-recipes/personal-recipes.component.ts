@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from '@angular/router';
 import { UserService } from "../user.service";
 import { AddCustomComponent } from './add-custom/add-custom.component';
 
@@ -24,6 +25,7 @@ export class PersonalRecipesComponent implements OnInit {
     private _userService: UserService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -61,11 +63,17 @@ export class PersonalRecipesComponent implements OnInit {
               response.recipeInstructions,
               response.recipeSummary,
               response.recipeComments,
-              response.image
             )
-            .subscribe((res) => {      
+            .subscribe((res) => {
               console.log(res);
-              this.snackBar.open(res.RecipeResults.Message, "", { duration: 3000 });
+              this.snackBar.open(res.Message, " ", { duration: 3000 });
+              if(res.Result === "Success"){
+                const currentRoute = this.router.url;
+
+                this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                    this.router.navigate([currentRoute]); // navigate to same route
+                }); 
+              }
             });
         }
       });
@@ -87,9 +95,15 @@ export class PersonalRecipesComponent implements OnInit {
       });
   }
 
-  filter() {
+  filterSaved() {
     this.savedRecipes = this.initialSavedRecipes.filter((x) =>
       x.RecipeName?.includes(this.recipeNameFilter.value)
     );
+  }
+
+  filterCustom(){
+    this.customRecipes = this.initialCustomRecipes.filter((x) =>
+    x.RecipeName?.includes(this.customNameFilter.value)
+  );
   }
 }

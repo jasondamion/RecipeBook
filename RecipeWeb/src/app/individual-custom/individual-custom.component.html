@@ -9,6 +9,7 @@
         <h1>{{ recipe?.RecipeName }}</h1>
         <br />
         <img *ngIf="image" src="{{ image }}" alt="{{recipe?.RecipeName}}"/>
+        <img *ngIf="!image" src="../../assets/FoodPlaceholder.png" height="300vh" width="300vw" alt="{{recipe?.RecipeName}}"/>
         <br />
         <h2>Summary:</h2>
         <h3 [innerHTML]="recipe?.RecipeSummary"></h3>
@@ -39,10 +40,9 @@
         of {{ recipe?.RecipeInstructions.length }} steps
       </p>
     
-      <mat-form-field class="hide-print" appearance="fill">
-        <mat-label>Comments</mat-label>
-        <textarea [formControl] = "comments" matInput></textarea>
-      </mat-form-field>
+      <h2>Comments</h2>
+      <p>{{recipe?.RecipeComments}}</p>
+      <br />
       <button mat-raised-button (click)="editRecipe()" class="hide-print" color="primary">Edit Recipe</button>
     
     </div>

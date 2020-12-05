@@ -1,4 +1,29 @@
-const User = require('./UserFunctions')
+const User = require('./UserFunctions');
+const multer = require('multer');
+var DIR = '../Uploads/';
+var storage = multer.diskStorage({
+
+    // Setting directory on disk to save uploaded files
+    destination: function (req, file, cb) {
+        cb(null, DIR)
+    },
+})
+
+var upload = multer({
+    storage: storage,
+    limits: {
+        // Setting Image Size Limit to 2MBs
+        fileSize: 2000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            //Error 
+            cb(new Error('Please upload JPG and PNG images only!'))
+        }
+        //Success 
+        cb(undefined, true)
+    }
+})
 
 module.exports = function (app) {
 
@@ -80,15 +105,14 @@ module.exports = function (app) {
         res.send(response)
     })
 
-    app.post("/custom/", async function (req, res) {
+    app.post("/custom/", upload.single('image'), async function (req, res, next) {
         var token = req.header('token');
         recipeName = req.body.recipeName;
         recipeIngredients = req.body.recipeIngredients;
         recipeInstructions = req.body.recipeInstructions;
         recipeSummary = req.body.recipeSummary;
         recipeComments = req.body.recipeComments;
-        image = req.files.image;
-        let response = await User.AddCustomRecipe(token, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments, image)
+        let response = await User.AddCustomRecipe(token, recipeName, recipeIngredients, recipeInstructions, recipeSummary, recipeComments)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
             currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
@@ -96,7 +120,7 @@ module.exports = function (app) {
         res.send(response)
     })
 
-    app.put("/custom/", async function (req, res) {
+    app.put("/custom/", async function (req, res) { 
         var token = req.header('token');
         recipeId = req.body.recipeId;
         recipeName = req.body.recipeName;
@@ -128,40 +152,6 @@ module.exports = function (app) {
         username = req.body.username;
         suggestedPassword = req.body.suggestedPassword;
         let response = await User.ForgetPassword(firstName, username, suggestedPassword)
-        var currentTime = new Date();
-        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
-            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
-        console.log({ Response: response, Timestamp: timestamp });
-        res.send(response)
-    })
-
-    app.put("/image/", async function (req, res) {
-        var token = req.header('token');
-        customRecipeId = req.body.customRecipeId;
-        let image = req.files.image;
-        let response = await User.UpdateImage(token, image, customRecipeId)
-        var currentTime = new Date();
-        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
-            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
-        console.log({ Response: response, Timestamp: timestamp });
-        res.send(response)
-    })
-
-    app.delete("/image/:customRecipeId", async function (req, res) {
-        var token = req.header('token');
-        var customRecipeId = req.params.customRecipeId;
-        let response = await User.RemoveImage(token, customRecipeId)
-        var currentTime = new Date();
-        let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
-            currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
-        console.log({ Response: response, Timestamp: timestamp });
-        res.send(response)
-    })
-
-    app.get("/image/:customRecipeId", async function (req, res) {
-        var token = req.header('token');
-        customRecipeId = req.params.customRecipeId;
-        let response = await User.GetImage(token, customRecipeId)
         var currentTime = new Date();
         let timestamp = currentTime.getFullYear() + '-' + (currentTime.getMonth() + 1) + '-' + currentTime.getDate() + " | " +
             currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();

@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { requiredFileType } from 'src/app/app-file-upload/requiredFileType';
 
 @Component({
   selector: "app-add-custom",
@@ -24,11 +23,10 @@ export class AddCustomComponent implements OnInit {
   recipeComments = new FormControl("", {
     updateOn: "change",
   });
-  image = new FormControl(null, [requiredFileType('png')])
 
   constructor(
     public dialogRef: MatDialogRef<AddCustomComponent>,
-    @Inject(MAT_DIALOG_DATA) private readonly data
+    @Inject(MAT_DIALOG_DATA) private readonly data,
   ) {}
 
   ngOnInit(): void {}
@@ -36,12 +34,11 @@ export class AddCustomComponent implements OnInit {
   closeDialog(confirmed){
     this.dialogRef.close({
       confirmed,
-      recipeName: this.recipeName,
-      recipeIngredients: this.recipeIngredients,
-      recipeInstructions: this.recipeInstructions,
-      recipeSummary: this.recipeSummary,
-      recipeComments: this.recipeComments,
-      image: this.image ? this.image : null
+      recipeName: this.recipeName.value,
+      recipeIngredients: this.recipeIngredients.value,
+      recipeInstructions: this.recipeInstructions.value,
+      recipeSummary: this.recipeSummary.value,
+      recipeComments: this.recipeComments.value,
     })
   }
 }

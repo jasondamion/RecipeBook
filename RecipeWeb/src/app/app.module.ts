@@ -20,8 +20,6 @@ import { MissingIngredientDialogComponent } from './search-recipes/missing-ingre
 import { PersonalRecipesComponent } from './personal-recipes/personal-recipes.component';
 import { IndividualCustomComponent } from './individual-custom/individual-custom.component';
 import { CustomDialogComponent } from './individual-custom/custom-dialog/custom-dialog.component';
-import { FileUploadComponent } from './app-file-upload/app-file-upload.component';
-import { ProgressComponent } from './progress/progress.component';
 import { AddCustomComponent } from './personal-recipes/add-custom/add-custom.component';
 
 
@@ -39,8 +37,6 @@ import { AddCustomComponent } from './personal-recipes/add-custom/add-custom.com
     PersonalRecipesComponent,
     IndividualCustomComponent,
     CustomDialogComponent,
-    FileUploadComponent,
-    ProgressComponent,
     AddCustomComponent,
   ],
   imports: [
